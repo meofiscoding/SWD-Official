@@ -30,5 +30,18 @@ namespace App.DAL.Repositories
                 throw;
             }
         }
+
+        public User Login(string username, string password)
+        {
+            ////return User that have username and password
+            if (username == null || password == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _cmcContext.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            }
+        }
     }
 }

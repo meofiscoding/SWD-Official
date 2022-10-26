@@ -4,11 +4,14 @@ using App.DAL.Repositories.Contracts;
 using App.BLL.Services;
 using App.BLL.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using App.DAL.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSession();
 
 builder.Services.AddDbContext<CmcContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CMC")));
 
@@ -16,9 +19,18 @@ builder.Services.AddDbContext<CmcContext>(options => options.UseSqlServer(builde
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 //Service Provider (Regist Service)
 builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var service = scope.ServiceProvider;
+    SeedData.Initialize(service);
+}
+
+app.UseSession();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
