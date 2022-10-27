@@ -33,6 +33,7 @@ namespace App.DAL.Models
                         Fullname = "Jun Lee",
                         PhoneNumber = "01234566",
                         Address = "UK",
+                        IdentityNumber = "012345677",
                         Status = 1
                     },
 
@@ -45,7 +46,8 @@ namespace App.DAL.Models
                           Fullname = "Lee Thi Bun Beo",
                           PhoneNumber = "01234566",
                           Address = "UK-VN",
-                          Status = 1
+                          Status = 1,
+                          IdentityNumber = "012345677"
                       },
                         new User
                         {
@@ -56,7 +58,8 @@ namespace App.DAL.Models
                             Fullname = "Chuoi beo",
                             PhoneNumber = "01234566",
                             Address = "UK-VN",
-                            Status = 1
+                            Status = 1,
+                            IdentityNumber = "012345677"
                         },
                           new User
                           {
@@ -67,9 +70,11 @@ namespace App.DAL.Models
                               Fullname = "Tea Nguyen",
                               PhoneNumber = "01234566",
                               Address = "VN",
-                              Status = 1
+                              Status = 1,
+                              IdentityNumber = "012345677"
                           }
                 );
+                context.SaveChanges();
 
                 // Look for any movies.
                 if (context.Roles.Any())
