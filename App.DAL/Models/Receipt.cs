@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models;
-
-public partial class Receipt
+namespace App.DAL.Models
 {
-    public int ReceiptId { get; set; }
+    public partial class Receipt
+    {
+        public int ReceiptId { get; set; }
+        public int UserId { get; set; }
+        public double Price { get; set; }
+        public int Status { get; set; }
+        public DateTime CreatedDate { get; set; }
 
-    public int UserId { get; set; }
-
-    public double Price { get; set; }
-
-    public int Status { get; set; }
-
-    public DateTime CreatedDate { get; set; }
-
-    public virtual User User { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
+    }
 }

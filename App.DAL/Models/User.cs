@@ -1,33 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace App.DAL.Models;
-
-public partial class User
+namespace App.DAL.Models
 {
-    public int UserId { get; set; }
+    public partial class User
+    {
+        public User()
+        {
+            Payments = new HashSet<Payment>();
+            Receipts = new HashSet<Receipt>();
+        }
 
-    public string Username { get; set; } = null!;
+        public int UserId { get; set; }
+        public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
+        public string Fullname { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
+        public string IdentityNumber { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string Address { get; set; } = null!;
+        public int RoleId { get; set; }
+        public int Status { get; set; }
 
-    [DataType(DataType.Password)]
-    public string Password { get; set; } = null!;
-
-    public string Fullname { get; set; } = null!;
-
-    public string PhoneNumber { get; set; } = null!;
-
-    public string IdentityNumber { get; set; } = null!;
-
-    public string Email { get; set; } = null!;
-
-    public string Address { get; set; } = null!;
-
-    public int RoleId { get; set; }
-
-    public int Status { get; set; }
-
-    public virtual ICollection<Payment> Payments { get; } = new List<Payment>();
-
-    public virtual ICollection<Receipt> Receipts { get; } = new List<Receipt>();
+        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<Receipt> Receipts { get; set; }
+    }
 }

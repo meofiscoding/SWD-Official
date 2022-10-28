@@ -13,9 +13,9 @@ namespace App.DAL.Repositories
     public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel : class
     {
 
-        private readonly CmcContext _cmcContext;
+        private readonly CMCContext _cmcContext;
 
-        public GenericRepository(CmcContext cmcContext)
+        public GenericRepository(CMCContext cmcContext)
         {
             _cmcContext = cmcContext;
         }

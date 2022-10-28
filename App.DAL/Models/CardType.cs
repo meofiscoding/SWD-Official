@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models;
-
-public partial class CardType
+namespace App.DAL.Models
 {
-    public int TypeId { get; set; }
+    public partial class CardType
+    {
+        public CardType()
+        {
+            TemplateCards = new HashSet<TemplateCard>();
+        }
 
-    public string TypeName { get; set; } = null!;
+        public int TypeId { get; set; }
+        public string TypeName { get; set; } = null!;
+        public int Status { get; set; }
 
-    public int Status { get; set; }
-
-    public virtual ICollection<TemplateCard> TemplateCards { get; } = new List<TemplateCard>();
+        public virtual ICollection<TemplateCard> TemplateCards { get; set; }
+    }
 }

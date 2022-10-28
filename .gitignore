@@ -348,3 +348,15 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+App.DAL/Models/User.cs
+App.DAL/Models/TemplateCard.cs
+App.DAL/Models/SeedData.cs
+App.DAL/Models/Role.cs
+App.DAL/Models/Receipt.cs
+App.DAL/Models/Payment.cs
+App.DAL/Models/Email.cs
+App.DAL/Models/Discount.cs
+App.DAL/Models/CardType.cs
+App.DAL/Models/CardBox.cs
+App.DAL/Models/Card.cs
+App.DAL/Models/ApplyingDiscount.cs

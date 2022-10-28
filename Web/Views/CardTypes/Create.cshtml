@@ -1,0 +1,81 @@
+﻿@model App.DAL.Models.CardType
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+@* <div class="row">
+    <div class="col-md-4">
+    <form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+    <label asp-for="TypeId" class="control-label"></label>
+    <input asp-for="TypeId" class="form-control" />
+    <span asp-validation-for="TypeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="TypeName" class="control-label"></label>
+    <input asp-for="TypeName" class="form-control" />
+    <span asp-validation-for="TypeName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <label asp-for="Status" class="control-label"></label>
+    <input asp-for="Status" class="form-control" />
+    <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+    </form>
+    </div>
+    </div> *@
+<div class="col-xl">
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">New Card Type</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3">
+                    <label class="form-label" for="basic-icon-default-fullname">Type Name: </label>
+                    <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text">
+                            <i class="menu-icon tf-icons bx bx-detail"></i>
+                        </span>
+                        <input type="text"  asp-for="TypeName"  class="form-control" id="basic-icon-default-fullname" placeholder="Type Name"
+                            aria-label="Type Name" aria-describedby="basic-icon-default-fullname2" />
+                    </div>
+                    <span asp-validation-for="TypeName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Status" class="form-label"></label>
+                    <select class="form-select" asp-for="Status"  id="exampleFormControlSelect1" aria-label="Default select example">
+                          <option selected="">Open this select menu</option>
+                          <option value="1">Active</option>
+                          <option value="0">Deactive</option>
+                        </select>
+                </div>
+                <div class="mb-3">
+                          <label class="form-label" for="basic-icon-default-message">Details</label>
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-message2" class="input-group-text"><i class="bx bx-comment"></i></span>
+                            <textarea asp-for="CardDetail"  id="basic-icon-default-message" class="form-control" placeholder="More about this card type" aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2"></textarea>
+                          </div>
+                          <span asp-validation-for="CardDetail" class="text-danger"></span>
+                        </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

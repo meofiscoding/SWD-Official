@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models;
-
-public partial class TemplateCard
+namespace App.DAL.Models
 {
-    public int TemplateId { get; set; }
+    public partial class TemplateCard
+    {
+        public TemplateCard()
+        {
+            Cards = new HashSet<Card>();
+        }
 
-    public int TypeId { get; set; }
+        public int TemplateId { get; set; }
+        public int TypeId { get; set; }
+        public string Title { get; set; } = null!;
+        public double Price { get; set; }
+        public int Status { get; set; }
 
-    public string Title { get; set; } = null!;
-
-    public double Price { get; set; }
-
-    public int Status { get; set; }
-
-    public virtual ICollection<Card> Cards { get; } = new List<Card>();
-
-    public virtual CardType Type { get; set; } = null!;
+        public virtual CardType Type { get; set; } = null!;
+        public virtual ICollection<Card> Cards { get; set; }
+    }
 }

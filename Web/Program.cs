@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
 
-builder.Services.AddDbContext<CmcContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CMC")));
+builder.Services.AddDbContext<CMCContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CMC")));
 
 //Repository Provider (Regist repository)
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));

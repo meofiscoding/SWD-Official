@@ -13,9 +13,9 @@ namespace App.DAL.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new CmcContext(
+            using (var context = new CMCContext(
                 serviceProvider.GetRequiredService<
-                    DbContextOptions<CmcContext>>()))
+                    DbContextOptions<CMCContext>>()))
             {
                 // Look for any movies.
                 if (context.Users.Any())

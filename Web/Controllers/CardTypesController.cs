@@ -5,95 +5,90 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using App.DAL.Models;
 using App.DAL.DataContext;
+using App.DAL.Models;
 
 namespace Web.Controllers
 {
-    public class TemplateCardsController : Controller
+    public class CardTypesController : Controller
     {
         private readonly CMCContext _context;
 
-        public TemplateCardsController(CMCContext context)
+        public CardTypesController(CMCContext context)
         {
             _context = context;
         }
 
-        // GET: TemplateCards
+        // GET: CardTypes
         public async Task<IActionResult> Index()
         {
-            var cmcContext = _context.TemplateCards.Include(t => t.Type);
-            return View(await cmcContext.ToListAsync());
+              return View(await _context.CardTypes.ToListAsync());
         }
 
-        // GET: TemplateCards/Details/5
+        // GET: CardTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TemplateCards == null)
+            if (id == null || _context.CardTypes == null)
             {
                 return NotFound();
             }
 
-            var templateCard = await _context.TemplateCards
-                .Include(t => t.Type)
-                .FirstOrDefaultAsync(m => m.TemplateId == id);
-            if (templateCard == null)
+            var cardType = await _context.CardTypes
+                .FirstOrDefaultAsync(m => m.TypeId == id);
+            if (cardType == null)
             {
                 return NotFound();
             }
 
-            return View(templateCard);
+            return View(cardType);
         }
 
-        // GET: TemplateCards/Create
+        // GET: CardTypes/Create
         public IActionResult Create()
         {
-            ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName");
             return View();
         }
 
-        // POST: TemplateCards/Create
+        // POST: CardTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TemplateId,TypeId,Title,Price,Status")] TemplateCard templateCard)
+        public async Task<IActionResult> Create([Bind("TypeId,TypeName,Status")] CardType cardType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(templateCard);
+                _context.Add(cardType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
-            return View(templateCard);
+            return View(cardType);
         }
 
-        // GET: TemplateCards/Edit/5
+        // GET: CardTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TemplateCards == null)
+            if (id == null || _context.CardTypes == null)
             {
                 return NotFound();
             }
 
-            var templateCard = await _context.TemplateCards.FindAsync(id);
-            if (templateCard == null)
+            var cardType = await _context.CardTypes.FindAsync(id);
+            if (cardType == null)
             {
                 return NotFound();
             }
-            ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
-            return View(templateCard);
+            return View(cardType);
         }
 
-        // POST: TemplateCards/Edit/5
+        // POST: CardTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TemplateId,TypeId,Title,Price,Status")] TemplateCard templateCard)
+        public async Task<IActionResult> Edit(int id, [Bind("TypeId,TypeName,Status")] CardType cardType)
         {
-            if (id != templateCard.TemplateId)
+            if (id != cardType.TypeId)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace Web.Controllers
             {
                 try
                 {
-                    _context.Update(templateCard);
+                    _context.Update(cardType);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TemplateCardExists(templateCard.TemplateId))
+                    if (!CardTypeExists(cardType.TypeId))
                     {
                         return NotFound();
                     }
@@ -118,51 +113,49 @@ namespace Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
-            return View(templateCard);
+            return View(cardType);
         }
 
-        // GET: TemplateCards/Delete/5
+        // GET: CardTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.TemplateCards == null)
+            if (id == null || _context.CardTypes == null)
             {
                 return NotFound();
             }
 
-            var templateCard = await _context.TemplateCards
-                .Include(t => t.Type)
-                .FirstOrDefaultAsync(m => m.TemplateId == id);
-            if (templateCard == null)
+            var cardType = await _context.CardTypes
+                .FirstOrDefaultAsync(m => m.TypeId == id);
+            if (cardType == null)
             {
                 return NotFound();
             }
 
-            return View(templateCard);
+            return View(cardType);
         }
 
-        // POST: TemplateCards/Delete/5
+        // POST: CardTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.TemplateCards == null)
+            if (_context.CardTypes == null)
             {
-                return Problem("Entity set 'CMCContext.TemplateCards'  is null.");
+                return Problem("Entity set 'CMCContext.CardTypes'  is null.");
             }
-            var templateCard = await _context.TemplateCards.FindAsync(id);
-            if (templateCard != null)
+            var cardType = await _context.CardTypes.FindAsync(id);
+            if (cardType != null)
             {
-                _context.TemplateCards.Remove(templateCard);
+                _context.CardTypes.Remove(cardType);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TemplateCardExists(int id)
+        private bool CardTypeExists(int id)
         {
-          return _context.TemplateCards.Any(e => e.TemplateId == id);
+          return _context.CardTypes.Any(e => e.TypeId == id);
         }
     }
 }
