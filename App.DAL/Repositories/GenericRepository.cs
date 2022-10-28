@@ -34,13 +34,13 @@ namespace App.DAL.Repositories
         public User Login(string username, string password)
         {
             ////return User that have username and password
-            if (username == null || password == null)
+            if (_cmcContext.Users.Any(p => p.Username.Equals(username)) && _cmcContext.Users.Any(p => p.Password.Equals(password)))
             {
-                return null;
+                return _cmcContext.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
             }
             else
             {
-                return _cmcContext.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+                return null;
             }
         }
     }

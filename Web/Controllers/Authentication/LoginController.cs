@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using App.BLL.Services;
+using App.BLL.Services.Contracts;
+using App.DAL.DataContext;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers.Authentication
@@ -6,20 +9,43 @@ namespace Web.Controllers.Authentication
     [Route("account")]
     public class LoginController : Controller
     {
+        private readonly IAccountService _accountService;
+
+        public LoginController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         // GET: LoginController
-        [Route("")]
-        [Route("~/")]
+
         [Route("index")]
         public ActionResult Index()
         {
 
-            return View();
+            return View("Index");
         }
 
         // GET: LoginController/Details/5
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        //Post: LoginController
+        [HttpPost]
+        [Route("login")]
+        public ActionResult Login(string username, string password)
+        {
+            var account = _accountService.Login(username, password);
+            if (account != null)
+            {
+                HttpContext.Session.SetString("username", username);
+                return RedirectToAction("Index","Home");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: LoginController/Create

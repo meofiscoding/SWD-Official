@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.DAL.Models;
 
@@ -9,6 +10,7 @@ public partial class User
 
     public string Username { get; set; } = null!;
 
+    [DataType(DataType.Password)]
     public string Password { get; set; } = null!;
 
     public string Fullname { get; set; } = null!;

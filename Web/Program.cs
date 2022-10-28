@@ -5,6 +5,8 @@ using App.BLL.Services;
 using App.BLL.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using App.DAL.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
