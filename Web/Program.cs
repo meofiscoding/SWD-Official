@@ -23,7 +23,6 @@ builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericReposi
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

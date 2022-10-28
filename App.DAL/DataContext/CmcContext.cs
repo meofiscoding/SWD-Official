@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using App.DAL.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace App.DAL.DataContext;
 
@@ -41,7 +42,11 @@ public partial class CmcContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-
+        var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        IConfigurationRoot configuration = builder.Build();
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("CMC"));
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
