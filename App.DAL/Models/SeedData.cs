@@ -118,6 +118,88 @@ namespace App.DAL.Models
                               Detail = "An insurence for home"
                           });
                 }
+                if (!context.TemplateCards.Any())
+                {
+                    context.TemplateCards.AddRange(
+                        new TemplateCard
+                        {
+                            TypeId = 10,
+                            Title = "Liability coverage",
+                            Price = 300,
+                            Status = 1,
+                        },
+                         new TemplateCard
+                         {
+                             TypeId = 10,
+                             Title = "(UM) coverage",
+                             Price = 30,
+                             Status = 1,
+                         },
+                          new TemplateCard
+                          {
+                              TypeId = 10,
+                              Title = "Personal injury protection (PIP)",
+                              Price = 30,
+                              Status = 1,
+                          },
+                           new TemplateCard
+                           {
+                               TypeId = 10,
+                               Title = "Medical payment coverage",
+                               Price = 30,
+                               Status = 1,
+                           },
+                            new TemplateCard
+                            {
+                                TypeId = 10,
+                                Title = "Comprehensive and collision coverage",
+                                Price = 30,
+                                Status = 1,
+                            },
+                             new TemplateCard
+                             {
+                                 TypeId = 11,
+                                 Title = "Personal property coverage",
+                                 Price = 30,
+                                 Status = 1,
+                             },
+                              new TemplateCard
+                              {
+                                  TypeId = 11,
+                                  Title = "Liability coverage. ",
+                                  Price = 30,
+                                  Status = 1,
+                              },
+                               new TemplateCard
+                               {
+                                   TypeId = 11,
+                                   Title = "Dwelling coverage",
+                                   Price = 30,
+                                   Status = 1,
+                               },
+                                new TemplateCard
+                                {
+                                    TypeId = 9,
+                                    Title = "Personal property coverage",
+                                    Price = 30,
+                                    Status = 1,
+                                },
+                                 new TemplateCard
+                                 {
+                                     TypeId = 9,
+                                     Title = "Other structures on the property",
+                                     Price = 30,
+                                     Status = 1,
+                                 },
+                                  new TemplateCard
+                                  {
+                                      TypeId = 9,
+                                      Title = "Liability coverage",
+                                      Price = 30,
+                                      Status = 1,
+                                  }
+                        );
+                }
                 context.SaveChanges();
             }
         }

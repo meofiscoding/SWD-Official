@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<App.DAL.Models.CardType>
 @using Humanizer
 @{
-    ViewData["Title"] = "Card Types";
+    ViewData["Title"] = "Card";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Categories</h1>
 
 <a asp-action="Create" class="btn btn-primary my-3">Create New</a>
 <div class="row mb-5">
@@ -15,8 +15,8 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="card-title d-flex justify-content-between align-items-center">
-                         <h5 class="card-title">@item.TypeName</h5>
-                         <p class="card-subtitle text-muted">updated @item.UpdatedAt.Humanize()</p>
+                         <a class="card-title" asp-action="Details" asp-route-id="@item.TypeId">@item.TypeName</a>
+                         <p class="card-subtitle text-muted">updated @(item.UpdatedAt.GetValueOrDefault().AddHours(-7).Humanize())</p>
                      </div>
                     <p class="card-text">@item.Detail</p>
                     <a asp-action="Edit" asp-route-id="@item.TypeId" class="btn btn-primary">Edit</a>

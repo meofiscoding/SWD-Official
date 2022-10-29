@@ -33,9 +33,8 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-
-            var cardType = await _context.CardTypes
-                .FirstOrDefaultAsync(m => m.TypeId == id);
+            ViewBag.TypeName = _context.CardTypes.Find(id).TypeName.ToString();
+            var cardType = await _context.TemplateCards.Where(t=>t.TypeId == id).ToListAsync();
             if (cardType == null)
             {
                 return NotFound();
@@ -103,7 +102,7 @@ namespace Web.Controllers
                     _context.Update(cardType);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception)
                 {
                     if (!CardTypeExists(cardType.TypeId))
                     {

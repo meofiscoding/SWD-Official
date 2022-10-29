@@ -7,31 +7,6 @@
 
 <h1>Edit</h1>
 
-@*<h4>CardType</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="TypeId" />
-            <div class="form-group">
-                <label asp-for="TypeName" class="control-label"></label>
-                <input asp-for="TypeName" class="form-control" />
-                <span asp-validation-for="TypeName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>*@
-
-
 <div class="col-xl">
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -47,7 +22,7 @@
                         <span id="basic-icon-default-fullname2" class="input-group-text">
                             <i class="menu-icon tf-icons bx bx-detail"></i>
                         </span>
-                        <input type="text"  asp-for="TypeName"  class="form-control" id="basic-icon-default-fullname" placeholder="Type Name"
+                        <input type="text" maxlength="255" asp-for="TypeName"  class="form-control" id="basic-icon-default-fullname" placeholder="Type Name"
                             aria-label="Type Name" aria-describedby="basic-icon-default-fullname2" />
                     </div>
                     <span asp-validation-for="TypeName" class="text-danger"></span>
