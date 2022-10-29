@@ -14,6 +14,8 @@ namespace App.DAL.Models
         public string TypeName { get; set; } = null!;
         public int Status { get; set; }
         public string? Detail { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         public virtual ICollection<TemplateCard> TemplateCards { get; set; }
     }

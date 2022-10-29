@@ -112,6 +112,11 @@ namespace App.DAL.DataContext
 
                 entity.Property(e => e.TypeId).HasColumnName("type_id");
 
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createdAt")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Detail)
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -121,6 +126,11 @@ namespace App.DAL.DataContext
                 entity.Property(e => e.TypeName)
                     .HasMaxLength(50)
                     .HasColumnName("type_name");
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updatedAt")
+                    .HasDefaultValueSql("(getdate())");
             });
 
             modelBuilder.Entity<Discount>(entity =>
@@ -231,6 +241,11 @@ namespace App.DAL.DataContext
 
                 entity.Property(e => e.TemplateId).HasColumnName("template_id");
 
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("createdAt")
+                    .HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Price).HasColumnName("price");
 
                 entity.Property(e => e.Status).HasColumnName("status");
@@ -241,6 +256,11 @@ namespace App.DAL.DataContext
                     .HasColumnName("title");
 
                 entity.Property(e => e.TypeId).HasColumnName("type_id");
+
+                entity.Property(e => e.UpdatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("updatedAt")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.TemplateCards)

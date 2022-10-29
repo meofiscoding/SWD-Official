@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.DAL.DataContext;
 using App.DAL.Models;
+using Humanizer;
 
 namespace Web.Controllers
 {
@@ -87,7 +88,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TypeId,TypeName,Status")] CardType cardType)
+        public async Task<IActionResult> Edit(int id, [Bind("TypeId,TypeName,Detail")] CardType cardType)
         {
             if (id != cardType.TypeId)
             {
@@ -98,6 +99,7 @@ namespace Web.Controllers
             {
                 try
                 {
+                    cardType.Status = 1;
                     _context.Update(cardType);
                     await _context.SaveChangesAsync();
                 }
