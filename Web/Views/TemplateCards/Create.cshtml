@@ -1,48 +1,51 @@
 ﻿@model App.DAL.Models.TemplateCard
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Card";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
-
-<h4>TemplateCard</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TypeId" class="control-label"></label>
-                <select asp-for="TypeId" class ="form-control" asp-items="ViewBag.TypeId"></select>
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">New Template Card</h5>
             </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+            <div class="card-body">
+                <form asp-action="Create" asp-controller="TemplateCards" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlSelect1" class="form-label">Category: </label>
+                        <select asp-for="TypeId" id="exampleFormControlSelect1" class="form-select" asp-items="ViewBag.TypeId"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Title</label>
+                        <input asp-for="Title" type="text" class="form-control" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp" required>
+                        <span asp-validation-for="Title" class="text-danger" ></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Price</label>
+                        <input asp-for="Price" type="text" class="form-control" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Attachments</label>
+                        <input type="file" name="FileUpload" class="form-control" id="formFile">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="CardTypes"><i class='bx bx-arrow-back'></i>Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

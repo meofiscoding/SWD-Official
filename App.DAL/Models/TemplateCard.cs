@@ -17,6 +17,7 @@ namespace App.DAL.Models
         public int Status { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public string? FileName { get; set; }
 
         public virtual CardType Type { get; set; } = null!;
         public virtual ICollection<Card> Cards { get; set; }

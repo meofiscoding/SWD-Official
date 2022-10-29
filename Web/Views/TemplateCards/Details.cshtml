@@ -1,43 +1,62 @@
 ﻿@model App.DAL.Models.TemplateCard
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Card";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>TemplateCard</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type.TypeName)
-        </dd>
-    </dl>
+    <div class="row">
+        <div class="col-xl">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <span class="badge bg-label-@(Model.Status == 1? "success":"danger") my-2 me-1">@(Model.Status == 1? "Active":"Deactive")</span>
+                    <div class="mb-3">
+                        <label for="exampleFormControlSelect1" class="form-label">Category </label>
+                        <input type="text" class="form-control" value="@Model.Type.TypeName" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Title</label>
+                        <input type="text" class="form-control" value="@Model.Title" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="defaultFormControlInput" class="form-label">Price</label>
+                        <input value="@Model.Price" type="text" class="form-control" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp" disabled>
+                    </div>
+                    <div class="row mb-3">
+                        <section class="uploaded-area">
+                            <label>Attachment</label>
+                            @if (@Model.FileName != null)
+                            {
+                                <div class="attachment">
+                                    <li style="background: #e9f0ff;margin-bottom: 10px;list-style: none;padding: 15px 20px;border-radius: 5px;align-items: center;" class="d-flex justify-content-evenly">
+                                        <i class="bx bxs-file" style="font-size:30px"></i>
+                                        <div class="content col-md-11">
+                                            <div class="details" style="display:flex; align-items:center; justify-content: space-between">
+                                                <div style="display:flex; flex-direction: column">
+                                                    <span class="name" style="font-size:14px"> @Model.FileName - Uploaded  </span>
+                                                </div>
+                                                <span class="percent" style="display:flex"> <a href="/Uploads/@Model.Type.TypeName/@Model.FileName" class='bx bxs-download' style="font-size:20px; margin-right: 10px; cursor:pointer" download></a></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
+                            }
+                            else
+                            {
+                                <span>No attachment included</span>
+                            }
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.TemplateId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Details" asp-controller="CardTypes" asp-route-id="@Model.TypeId"><i class='bx bx-arrow-back'></i>Back to List</a>
 </div>

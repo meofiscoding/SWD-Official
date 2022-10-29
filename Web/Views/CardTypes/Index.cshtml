@@ -7,7 +7,7 @@
 
 <h1>Categories</h1>
 
-<a asp-action="Create" class="btn btn-primary my-3">Create New</a>
+<a asp-action="Create" class="btn btn-info my-3"><i class='bx bxs-add-to-queue' ></i>Create New</a>
 <div class="row mb-5">
     @foreach (var item in Model)
     {
@@ -15,8 +15,8 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="card-title d-flex justify-content-between align-items-center">
-                         <a class="card-title" asp-action="Details" asp-route-id="@item.TypeId">@item.TypeName</a>
-                         <p class="card-subtitle text-muted">updated @(item.UpdatedAt.GetValueOrDefault().AddHours(-7).Humanize())</p>
+                         <a class="card-title my-0" asp-action="Details" asp-route-id="@item.TypeId">@item.TypeName</a>
+                         <p class="card-subtitle text-muted my-0">updated @(item.UpdatedAt.GetValueOrDefault().AddHours(-7).Humanize())</p>
                      </div>
                     <p class="card-text">@item.Detail</p>
                     <a asp-action="Edit" asp-route-id="@item.TypeId" class="btn btn-primary">Edit</a>

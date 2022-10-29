@@ -13,11 +13,14 @@ namespace Web.Controllers
     public class TemplateCardsController : Controller
     {
         private readonly CMCContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public TemplateCardsController(CMCContext context)
+        public TemplateCardsController(CMCContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
+
 
         // GET: TemplateCards
         public async Task<IActionResult> Index()
@@ -57,13 +60,32 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TemplateId,TypeId,Title,Price,Status")] TemplateCard templateCard)
+        public async Task<IActionResult> Create([Bind("TypeId,Title,Price")] TemplateCard templateCard, IFormFile FileUpload)
         {
             if (ModelState.IsValid)
             {
+                var filename = "";
+                if (FileUpload != null)
+                {
+                    //Store file in directory
+                    string webRootPath = _webHostEnvironment.WebRootPath;
+                    //string contentRootPath = _webHostEnvironment.ContentRootPath;
+                    filename = FileUpload.FileName;
+                    var path = Path.Combine(webRootPath + "\\Uploads\\" + _context.CardTypes.Find(templateCard.TypeId).TypeName, filename);
+                    if (Directory.Exists(Path.GetDirectoryName(path)) == false) { Directory.CreateDirectory(Path.GetDirectoryName(path)); }
+                    if (FileUpload.Length > 0)
+                    {
+                        using (Stream fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await FileUpload.CopyToAsync(fileStream);
+                        }
+                    }
+                }
+                templateCard.Status = 1;
+                templateCard.FileName = filename;
                 _context.Add(templateCard);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index","CardTypes");
             }
             ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
             return View(templateCard);
@@ -91,7 +113,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TemplateId,TypeId,Title,Price,Status")] TemplateCard templateCard)
+        public async Task<IActionResult> Edit(int id, [Bind("TemplateId,TypeId,Title,Price,Status,FileName")] TemplateCard templateCard, IFormFile FileUpload)
         {
             if (id != templateCard.TemplateId)
             {
@@ -102,6 +124,25 @@ namespace Web.Controllers
             {
                 try
                 {
+                    var filename = "";
+                    if (string.IsNullOrEmpty(templateCard.FileName))
+                    {
+                        //Store file in directory
+                        string webRootPath = _webHostEnvironment.WebRootPath;
+                        //string contentRootPath = _webHostEnvironment.ContentRootPath;
+                        filename = FileUpload.FileName;
+                        var path = Path.Combine(webRootPath + "\\Uploads\\" + _context.CardTypes.Find(templateCard.TypeId).TypeName, filename);
+                        if (Directory.Exists(Path.GetDirectoryName(path)) == false) { Directory.CreateDirectory(Path.GetDirectoryName(path)); }
+                        if (FileUpload.Length > 0)
+                        {
+                            using (Stream fileStream = new FileStream(path, FileMode.Create))
+                            {
+                                await FileUpload.CopyToAsync(fileStream);
+                            }
+                        }
+                    }
+                    templateCard.FileName = filename;
+                    templateCard.Status = 1;
                     _context.Update(templateCard);
                     await _context.SaveChangesAsync();
                 }
@@ -116,7 +157,7 @@ namespace Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "CardTypes");
             }
             ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
             return View(templateCard);

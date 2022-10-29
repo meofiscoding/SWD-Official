@@ -246,6 +246,8 @@ namespace App.DAL.DataContext
                     .HasColumnName("createdAt")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.FileName).HasMaxLength(500);
+
                 entity.Property(e => e.Price).HasColumnName("price");
 
                 entity.Property(e => e.Status).HasColumnName("status");
