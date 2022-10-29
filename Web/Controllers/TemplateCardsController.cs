@@ -125,7 +125,7 @@ namespace Web.Controllers
                 try
                 {
                     var filename = "";
-                    if (string.IsNullOrEmpty(templateCard.FileName))
+                    if (FileUpload!=null)
                     {
                         //Store file in directory
                         string webRootPath = _webHostEnvironment.WebRootPath;
@@ -142,7 +142,6 @@ namespace Web.Controllers
                         }
                     }
                     templateCard.FileName = filename;
-                    templateCard.Status = 1;
                     _context.Update(templateCard);
                     await _context.SaveChangesAsync();
                 }
@@ -157,7 +156,7 @@ namespace Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index", "CardTypes");
+                return RedirectToAction("Details", "CardTypes",new {id= templateCard.TypeId});
             }
             ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
             return View(templateCard);
@@ -194,11 +193,10 @@ namespace Web.Controllers
             var templateCard = await _context.TemplateCards.FindAsync(id);
             if (templateCard != null)
             {
-                _context.TemplateCards.Remove(templateCard);
+               templateCard.Status = 0;
             }
-            
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "CardTypes", new {id=templateCard.TypeId});
         }
 
         private bool TemplateCardExists(int id)

@@ -17,6 +17,10 @@
                         <label for="exampleFormControlSelect1" class="form-label">Category </label>
                         <select asp-for="TypeId" id="exampleFormControlSelect1" class="form-select" asp-items="ViewBag.TypeId"></select>
                     </div>
+                   <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" form="@Model.Status" type="checkbox" id="flexSwitchCheckChecked" @(Model.Status == 1?"checked":"")>
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                      </div>
                     <div class="mb-3">
                         <label for="defaultFormControlInput" class="form-label">Title</label>
                         <input asp-for="Title" type="text" class="form-control" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp" required>
@@ -51,7 +55,6 @@
                             else
                             {
                                 <div class="mb-3">
-                                    <label for="formFile" class="form-label">Attachments</label>
                                     <input type="file" name="FileUpload" class="form-control" id="formFile">
                                 </div>
                             }

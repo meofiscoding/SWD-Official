@@ -14,11 +14,15 @@ namespace Web.Controllers
     public class CardTypesController : Controller
     {
         private readonly CMCContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CardTypesController(CMCContext context)
+        public CardTypesController(CMCContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
+
+
 
         // GET: CardTypes
         public async Task<IActionResult> Index()
@@ -148,6 +152,11 @@ namespace Web.Controllers
             var cardType = await _context.CardTypes.FirstOrDefaultAsync(m => m.TypeId == id);
             if (cardType != null)
             {
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                var path = Path.Combine(webRootPath + "\\Uploads\\" + _context.CardTypes.Find(id).TypeName);
+                if (Directory.Exists(Path.GetDirectoryName(path))) {
+                    Directory.Delete(Path.GetDirectoryName(path));
+                }
                 //_context.CardTypes.Remove(cardType);
                 cardType.Status = 0;
                 _context.Update(cardType);

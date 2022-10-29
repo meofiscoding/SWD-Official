@@ -8,7 +8,7 @@
 <h1>@ViewBag.TypeName</h1>
 @if (Model.Any())
 {
-    <a asp-action="Create" asp-controller="TemplateCards" class="btn btn-info my-3"><i class='bx bxs-add-to-queue' ></i>Create New</a>
+    <a asp-action="Create" asp-controller="TemplateCards" class="btn btn-info my-3"><i class='bx bxs-add-to-queue'></i>Create New</a>
     <div class="card">
         <h5 class="card-header">Template Card</h5>
         <div class="table-responsive text-nowrap">
@@ -35,7 +35,33 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" asp-action="Edit" asp-controller="TemplateCards" asp-route-id="@item.TemplateId"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" asp-action="Delete" asp-controller="TemplateCards" asp-route-id="@item.TemplateId"><i class="bx bx-trash me-1"></i> Delete</a>
+                                        <span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalCenter"><i class="bx bx-trash me-1"></i>Delete</span>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <form asp-action="Delete" asp-controller="TemplateCards">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalCenterTitle">Delete Card Template</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <span>Are you sure you want to Delete?</span>
+                                                        <input type="hidden" name="id" asp-for="@item.TemplateId" />
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button type="submit" class="btn btn-danger">Yes</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -51,11 +77,11 @@ else
     <div class="mt-4 d-flex align-items-center flex-column">
         <img src="~/assets/img/illustrations/girl-doing-yoga-light.png" alt="girl-doing-yoga-light" width="500" class="img-fluid" data-app-dark-img="illustrations/girl-doing-yoga-dark.png" data-app-light-img="illustrations/girl-doing-yoga-light.png">
         <p class="mb-2 mx-2"> Template Card is not created yet !</p>
-        <a asp-action="Create" asp-controller="TemplateCards" class="btn btn-info"><i class='bx bxs-add-to-queue' ></i>Create Now</a>
+        <a asp-action="Create" asp-controller="TemplateCards" class="btn btn-info"><i class='bx bxs-add-to-queue'></i>Create Now</a>
     </div>
 
 }
 <div>
-  <a asp-action="Index" class="btn my-3 btn-primary"><i class='bx bx-arrow-back'></i>Back to List</a>
+    <a asp-action="Index" class="btn my-3 btn-primary"><i class='bx bx-arrow-back'></i>Back to List</a>
 </div>
 
