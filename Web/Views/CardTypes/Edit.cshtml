@@ -7,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>CardType</h4>
+@*<h4>CardType</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -28,6 +28,41 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+    </div>
+</div>*@
+
+
+<div class="col-xl">
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Edit Card Types</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                 <input type="hidden" asp-for="TypeId" />
+                <div class="mb-3">
+                    <label class="form-label" for="basic-icon-default-fullname">Type Name: </label>
+                    <div class="input-group input-group-merge">
+                        <span id="basic-icon-default-fullname2" class="input-group-text">
+                            <i class="menu-icon tf-icons bx bx-detail"></i>
+                        </span>
+                        <input type="text"  asp-for="TypeName"  class="form-control" id="basic-icon-default-fullname" placeholder="Type Name"
+                            aria-label="Type Name" aria-describedby="basic-icon-default-fullname2" />
+                    </div>
+                    <span asp-validation-for="TypeName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                          <label class="form-label" for="basic-icon-default-message">Details</label>
+                          <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-message2" class="input-group-text"><i class="bx bx-comment"></i></span>
+                            <textarea asp-for="Detail"  id="basic-icon-default-message" class="form-control" placeholder="More about this card type" aria-label="Hi, Do you have a moment to talk Joe?" aria-describedby="basic-icon-default-message2"></textarea>
+                          </div>
+                          <span asp-validation-for="Detail" class="text-danger"></span>
+                        </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
     </div>
 </div>
 

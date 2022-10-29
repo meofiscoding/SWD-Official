@@ -22,7 +22,7 @@ namespace Web.Controllers
         // GET: CardTypes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.CardTypes.ToListAsync());
+            return View(await _context.CardTypes.Where(m => m.Status == 1).ToListAsync());
         }
 
         // GET: CardTypes/Details/5
@@ -54,10 +54,11 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TypeId,TypeName,Status")] CardType cardType)
+        public async Task<IActionResult> Create([Bind("TypeId,TypeName,Status,Detail")] CardType cardType)
         {
             if (ModelState.IsValid)
             {
+                cardType.Status = 1;
                 _context.Add(cardType);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -116,23 +117,23 @@ namespace Web.Controllers
             return View(cardType);
         }
 
-        // GET: CardTypes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.CardTypes == null)
-            {
-                return NotFound();
-            }
+        //// GET: CardTypes/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || _context.CardTypes == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var cardType = await _context.CardTypes
-                .FirstOrDefaultAsync(m => m.TypeId == id);
-            if (cardType == null)
-            {
-                return NotFound();
-            }
+        //    var cardType = await _context.CardTypes
+        //        .FirstOrDefaultAsync(m => m.TypeId == id);
+        //    if (cardType == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(cardType);
-        }
+        //    return View(cardType);
+        //}
 
         // POST: CardTypes/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -143,19 +144,25 @@ namespace Web.Controllers
             {
                 return Problem("Entity set 'CMCContext.CardTypes'  is null.");
             }
-            var cardType = await _context.CardTypes.FindAsync(id);
+            var cardType = await _context.CardTypes.FirstOrDefaultAsync(m => m.TypeId == id);
             if (cardType != null)
             {
-                _context.CardTypes.Remove(cardType);
+                //_context.CardTypes.Remove(cardType);
+                cardType.Status = 0;
+                _context.Update(cardType);
             }
-            
+            else
+            {
+                return NotFound();
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CardTypeExists(int id)
         {
-          return _context.CardTypes.Any(e => e.TypeId == id);
+            return _context.CardTypes.Any(e => e.TypeId == id);
         }
     }
 }

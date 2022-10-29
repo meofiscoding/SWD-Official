@@ -34,7 +34,7 @@ namespace App.DAL.DataContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Database=CMC;Trusted_Connection=True;uid=sa;pwd=123456;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Server=(local);Database=CMC;uid=sa;pwd=123456;Trusted_Connection=True;TrustServerCertificate=True");
             }
         }
 
@@ -111,6 +111,10 @@ namespace App.DAL.DataContext
                 entity.ToTable("CardType");
 
                 entity.Property(e => e.TypeId).HasColumnName("type_id");
+
+                entity.Property(e => e.Detail)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Status).HasColumnName("status");
 

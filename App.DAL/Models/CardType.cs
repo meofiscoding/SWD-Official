@@ -13,6 +13,7 @@ namespace App.DAL.Models
         public int TypeId { get; set; }
         public string TypeName { get; set; } = null!;
         public int Status { get; set; }
+        public string? Detail { get; set; }
 
         public virtual ICollection<TemplateCard> TemplateCards { get; set; }
     }

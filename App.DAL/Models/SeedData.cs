@@ -18,90 +18,106 @@ namespace App.DAL.Models
                     DbContextOptions<CMCContext>>()))
             {
                 // Look for any movies.
-                if (context.Users.Any())
+                if (!context.Users.Any())
                 {
-                    return;   // DB has been seeded
-                }
 
-                context.Users.AddRange(
-                    new User
-                    {
-                        RoleId = 1,
-                        Username = "Jun",
-                        Email = "jun@gmail.com",
-                        Password = "123456",
-                        Fullname = "Jun Lee",
-                        PhoneNumber = "01234566",
-                        Address = "UK",
-                        IdentityNumber = "012345677",
-                        Status = 1
-                    },
-
-                      new User
-                      {
-                          RoleId = 2,
-                          Username = "Bunbeo",
-                          Email = "bun@gmail.com",
-                          Password = "123456",
-                          Fullname = "Lee Thi Bun Beo",
-                          PhoneNumber = "01234566",
-                          Address = "UK-VN",
-                          Status = 1,
-                          IdentityNumber = "012345677"
-                      },
+                    context.Users.AddRange(
                         new User
                         {
-                            RoleId = 3,
-                            Username = "Chuoibeo",
-                            Email = "chuoi@gmail.com",
+                            RoleId = 1,
+                            Username = "Jun",
+                            Email = "jun@gmail.com",
                             Password = "123456",
-                            Fullname = "Chuoi beo",
+                            Fullname = "Jun Lee",
                             PhoneNumber = "01234566",
-                            Address = "UK-VN",
-                            Status = 1,
-                            IdentityNumber = "012345677"
+                            Address = "UK",
+                            IdentityNumber = "012345677",
+                            Status = 1
                         },
+
                           new User
                           {
-                              RoleId = 4,
-                              Username = "Tea",
-                              Email = "tea@gmail.com",
+                              RoleId = 2,
+                              Username = "Bunbeo",
+                              Email = "bun@gmail.com",
                               Password = "123456",
-                              Fullname = "Tea Nguyen",
+                              Fullname = "Lee Thi Bun Beo",
                               PhoneNumber = "01234566",
-                              Address = "VN",
+                              Address = "UK-VN",
                               Status = 1,
                               IdentityNumber = "012345677"
-                          }
-                );
-                context.SaveChanges();
-
-                // Look for any movies.
-                if (context.Roles.Any())
-                {
-                    return;   // DB has been seeded
+                          },
+                            new User
+                            {
+                                RoleId = 3,
+                                Username = "Chuoibeo",
+                                Email = "chuoi@gmail.com",
+                                Password = "123456",
+                                Fullname = "Chuoi beo",
+                                PhoneNumber = "01234566",
+                                Address = "UK-VN",
+                                Status = 1,
+                                IdentityNumber = "012345677"
+                            },
+                              new User
+                              {
+                                  RoleId = 4,
+                                  Username = "Tea",
+                                  Email = "tea@gmail.com",
+                                  Password = "123456",
+                                  Fullname = "Tea Nguyen",
+                                  PhoneNumber = "01234566",
+                                  Address = "VN",
+                                  Status = 1,
+                                  IdentityNumber = "012345677"
+                              }
+                    );
                 }
 
-                context.Roles.AddRange(
-                    new Role
-                    {
-                       RoleId= 1,
-                       RoleName = "User",
-                       Status= 1
-                    },
-                    new Role
-                    {
-                        RoleId = 2,
-                        RoleName = "Admin",
-                        Status = 1
-                    },
-                    new Role
-                    {
-                        RoleId = 3,
-                        RoleName = "Staff",
-                        Status = 1
-                    }
-                );
+                // Look for any movies.
+                if (!context.Roles.Any())
+                {
+                    context.Roles.AddRange(
+                        new Role
+                        {
+                            RoleName = "User",
+                            Status = 1
+                        },
+                        new Role
+                        {
+                            RoleName = "Admin",
+                            Status = 1
+                        },
+                        new Role
+                        {
+                            RoleName = "Staff",
+                            Status = 1
+                        }
+                    );
+                }
+
+                if (!context.CardTypes.Any())
+                {
+                    context.CardTypes.AddRange(
+                        new CardType
+                        {
+                            TypeName = "Health",
+                            Status = 1,
+                            Detail = "An insurence for health"
+                        },
+                         new CardType
+                         {
+                             TypeName = "Motor",
+                             Status = 1,
+                             Detail = "An insurence for motor"
+                         },
+                          new CardType
+                          {
+                              TypeName = "Home",
+                              Status = 1,
+                              Detail = "An insurence for home"
+                          });
+                }
                 context.SaveChanges();
             }
         }

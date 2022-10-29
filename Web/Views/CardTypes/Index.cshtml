@@ -1,67 +1,52 @@
 ﻿@model IEnumerable<App.DAL.Models.CardType>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Card Types";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- <h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-@*
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TypeName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.TypeId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.TypeId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.TypeId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table> *@
-
+<a asp-action="Create" class="btn btn-primary my-3">Create New</a>
 <div class="row mb-5">
-     @foreach (var item in Model)
-        {
-    <div class="col-md">
-        <div class="card mb-3">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img class="card-img card-img-left" src="../assets/img/elements/17.jpg" alt="Card image">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.TypeName</h5>
-                        <p class="card-text">
-                            This is a wider card with supporting text below as a natural lead-in to additional content.
-                            This content is a little bit longer.
-                        </p>
-                        <p class="card-text"><small class="text-muted">@item.Status</small></p>
-                    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6 col-lg-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@item.TypeName</h5>
+                    <p class="card-text">@item.Detail</p>
+                    <a asp-action="Edit" asp-route-id="@item.TypeId" class="btn btn-primary">Edit</a>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#modalCenter" class="btn btn-danger mx-4">Delete</button>
                 </div>
             </div>
         </div>
-    </div>
-        }
+        <!-- Modal -->
+        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form asp-action="Delete">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCenterTitle">Delete Card Types</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <span>Are you sure you want to Delete?</span>
+                                 <input type="hidden" name = "id" value="@item.TypeId"/>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type ="submit" class="btn btn-primary">Yes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
