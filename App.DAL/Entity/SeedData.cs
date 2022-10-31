@@ -80,17 +80,17 @@ namespace App.DAL.Models
                     context.Roles.AddRange(
                         new Role
                         {
-                            RoleName = "User",
-                            Status = 1
-                        },
-                        new Role
-                        {
                             RoleName = "Admin",
                             Status = 1
                         },
                         new Role
                         {
                             RoleName = "Staff",
+                            Status = 1
+                        },
+                        new Role
+                        {
+                            RoleName = "User",
                             Status = 1
                         }
                     );

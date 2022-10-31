@@ -1,12 +1,14 @@
 ﻿using App.BLL.Services;
 using App.BLL.Services.Contracts;
 using App.DAL.DataContext;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers.Authentication
 {
     [Route("account")]
+    [Authorize]
     public class LoginController : Controller
     {
         private readonly IAccountService _accountService;
@@ -36,8 +38,8 @@ namespace Web.Controllers.Authentication
         [Route("login")]
         public ActionResult Login(string username, string password)
         {
-            var account = _accountService.Login(username, password);
-            if (account != null)
+            bool isSuccess = _accountService.Login(username, password);
+            if (isSuccess)
             {
                 HttpContext.Session.SetString("username", username);
                 return RedirectToAction("Index","Home");

@@ -10,7 +10,7 @@ namespace App.BLL.Services.Contracts
 {
     public interface IAccountService
     {
-        public User Login(string username, string password);
+        public bool Login(string username, string password);
         
     }
 }

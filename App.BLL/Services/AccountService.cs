@@ -19,12 +19,20 @@ namespace App.BLL.Services
             _userRepository = userRepository;
         }
 
-        public User Login(string username, string password)
+        public bool Login(string username, string password)
         {
            
             try
             {
-                return _userRepository.Login(username,password);
+                var user = _userRepository.Login(username,password);
+                if (user != null && user.RoleId == (int)Constant.Role.Admin)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception)
             {
