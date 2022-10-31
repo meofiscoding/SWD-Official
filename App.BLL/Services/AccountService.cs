@@ -12,9 +12,9 @@ namespace App.BLL.Services
     public class AccountService : IAccountService
     {
         //private List<User> _users;
-        private readonly IGenericRepository<User> _userRepository;
+        private readonly IAccountRepository<User> _userRepository;
 
-        public AccountService(IGenericRepository<User> userRepository)
+        public AccountService(IAccountRepository<User> userRepository)
         {
             _userRepository = userRepository;
         }

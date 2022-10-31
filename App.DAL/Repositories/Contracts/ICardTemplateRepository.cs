@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using App.DAL.Models;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace App.DAL.Repositories.Contracts
 {
-    public interface IGenericRepository<TModels> where TModels : class
+    public interface ICardTemplateRepository<TModels> where TModels : class
     {
-        Task<List<TModels>> GetCards();
-        User Login(string username, string password);
+        IIncludableQueryable<TemplateCard,CardType> GetCardTemplates();
     }
 }

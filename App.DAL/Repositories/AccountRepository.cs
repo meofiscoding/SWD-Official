@@ -10,26 +10,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.DAL.Repositories
 {
-    public class GenericRepository<TModel> : IGenericRepository<TModel> where TModel : class
+    public class AccountRepository<TModel> : IAccountRepository<TModel> where TModel : class
     {
 
         private readonly CMCContext _cmcContext;
 
-        public GenericRepository(CMCContext cmcContext)
+        public AccountRepository(CMCContext cmcContext)
         {
             _cmcContext = cmcContext;
         }
 
-        public async Task<List<TModel>> GetCards()
-        {
-            try
-            {
-                return await _cmcContext.Set<TModel>().ToListAsync();   
-            }catch (Exception ex)
-            {
-                throw;
-            }
-        }
+        //public async Task<List<TModel>> GetCards()
+        //{
+        //    try
+        //    {
+        //        return await _cmcContext.Set<TModel>().ToListAsync();   
+        //    }catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         public User Login(string username, string password)
         {

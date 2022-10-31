@@ -9,9 +9,8 @@ namespace Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICardService _cardService;
-
-        public HomeController(ICardService cardService)
+        private readonly ICardTemplateService _cardService;
+        public HomeController(ICardTemplateService cardService)
         {
             this._cardService = cardService;
         }
@@ -36,12 +35,6 @@ namespace Web.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        public async Task<IActionResult> ShowCard()
-        {
-            List<Card> cards = await _cardService.GetCards();
-            return View(cards);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

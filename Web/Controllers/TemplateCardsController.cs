@@ -7,26 +7,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.DAL.Models;
 using App.DAL.DataContext;
+using App.BLL.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class TemplateCardsController : Controller
     {
         private readonly CMCContext _context;
+        private readonly ICardTemplateService _cardTemplateService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public TemplateCardsController(CMCContext context, IWebHostEnvironment webHostEnvironment)
+        public TemplateCardsController(CMCContext context, ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _cardTemplateService = cardTemplateService;
             _webHostEnvironment = webHostEnvironment;
         }
 
+        public TemplateCardsController(ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
+        {
+            _cardTemplateService = cardTemplateService;
+            _webHostEnvironment = webHostEnvironment;
+        }
 
         // GET: TemplateCards
         public async Task<IActionResult> Index()
         {
-            var cmcContext = _context.TemplateCards.Include(t => t.Type);
-            return View(await cmcContext.ToListAsync());
+            return View(_cardTemplateService.GetCardTemplates());
         }
 
         // GET: TemplateCards/Details/5

@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using App.DAL.DataContext;
 using App.DAL.Models;
 using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class CardTypesController : Controller
     {
         private readonly CMCContext _context;

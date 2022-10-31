@@ -8,8 +8,8 @@ using App.DAL.Models;
 
 namespace App.BLL.Services.Contracts
 {
-    public interface ICardService
+    public interface ICardTemplateService
     {
-        Task<List<Card>> GetCards();
+        Task<List<TemplateCard>> GetCardTemplates();
     }
 }

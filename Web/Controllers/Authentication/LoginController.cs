@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers.Authentication
 {
-    [Route("account")]
-    [Authorize]
+    [Route("Login")]
     public class LoginController : Controller
     {
         private readonly IAccountService _accountService;
@@ -20,7 +19,7 @@ namespace Web.Controllers.Authentication
 
         // GET: LoginController
 
-        [Route("index")]
+        [Route("Index")]
         public ActionResult Index()
         {
 

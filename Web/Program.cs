@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services.AddControllersWithViews(
     options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
@@ -17,15 +16,26 @@ builder.Services.AddControllersWithViews(
 builder.Services.AddSession();
 
 builder.Services.AddDbContext<CMCContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("CMC")));
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.SlidingExpiration = true;
+        options.AccessDeniedPath = "/Forbidden/";
+    });
 
 //Repository Provider (Regist repository)
-builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddTransient(typeof(IAccountRepository<>), typeof(AccountRepository<>));
+builder.Services.AddTransient(typeof(ICardTemplateRepository<>), typeof(CardTemplateRepository<>));
 //Service Provider (Regist Service)
-builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<ICardTemplateService, CardTemplateService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-
+var cookiePolicyOptions = new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+};
 var app = builder.Build();
-
+app.UseCookiePolicy(cookiePolicyOptions);
 using (var scope = app.Services.CreateScope())
 {
     var service = scope.ServiceProvider;
@@ -48,6 +58,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
