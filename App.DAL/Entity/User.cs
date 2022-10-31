@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models
+namespace App.DAL.Entity
 {
     public partial class User
     {
         public User()
         {
+            CardBoxes = new HashSet<CardBox>();
             Payments = new HashSet<Payment>();
             Receipts = new HashSet<Receipt>();
         }
@@ -22,6 +23,8 @@ namespace App.DAL.Models
         public int RoleId { get; set; }
         public int Status { get; set; }
 
+        public virtual Role Role { get; set; } = null!;
+        public virtual ICollection<CardBox> CardBoxes { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Receipt> Receipts { get; set; }
     }

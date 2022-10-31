@@ -4,7 +4,7 @@ using App.DAL.Repositories.Contracts;
 using App.BLL.Services;
 using App.BLL.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
-using App.DAL.Models;
+using App.DAL.Entity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 

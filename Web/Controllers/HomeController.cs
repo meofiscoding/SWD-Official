@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Web.Models;
 using App.BLL.Services.Contracts;
-using App.DAL.Models;
+using App.DAL.Entity;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers

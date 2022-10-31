@@ -1,5 +1,5 @@
 ﻿using App.BLL.Services.Contracts;
-using App.DAL.Models;
+using App.DAL.Entity;
 using App.DAL.Repositories.Contracts;
 using System;
 using System.Collections.Generic;

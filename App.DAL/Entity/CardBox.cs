@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models
+namespace App.DAL.Entity
 {
     public partial class CardBox
     {
@@ -12,5 +12,6 @@ namespace App.DAL.Models
         public int Status { get; set; }
 
         public virtual Card Card { get; set; } = null!;
+        public virtual User User { get; set; } = null!;
     }
 }

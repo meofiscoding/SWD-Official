@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.DAL.Models;
+using App.DAL.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -34,7 +34,7 @@ namespace App.DAL.DataContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=(local);Database=CMC;uid=sa;pwd=123456;Trusted_Connection=True;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Server=(local);Database=CMC;uid=sa;pwd=19112001;Trusted_Connection=True;TrustServerCertificate=True");
             }
         }
 
@@ -55,6 +55,12 @@ namespace App.DAL.DataContext
                     .HasForeignKey(d => d.DiscountId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ApplyingDiscount_Discount");
+
+                entity.HasOne(d => d.TemplateCard)
+                    .WithMany(p => p.ApplyingDiscounts)
+                    .HasForeignKey(d => d.TemplateCardId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ApplyingDiscount_TemplateCard");
             });
 
             modelBuilder.Entity<Card>(entity =>
@@ -102,6 +108,12 @@ namespace App.DAL.DataContext
                     .HasForeignKey(d => d.CardId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_CardBox_Card");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.CardBoxes)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CardBox_User");
             });
 
             modelBuilder.Entity<CardType>(entity =>
@@ -315,6 +327,12 @@ namespace App.DAL.DataContext
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("username");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.Users)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_User_Role");
             });
 
             OnModelCreatingPartial(modelBuilder);

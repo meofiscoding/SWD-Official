@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using App.DAL.Models;
+using App.DAL.Entity;
 using App.DAL.DataContext;
 using App.BLL.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;

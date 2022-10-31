@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models
+namespace App.DAL.Entity
 {
     public partial class TemplateCard
     {
         public TemplateCard()
         {
+            ApplyingDiscounts = new HashSet<ApplyingDiscount>();
             Cards = new HashSet<Card>();
         }
 
@@ -20,6 +21,7 @@ namespace App.DAL.Models
         public string? FileName { get; set; }
 
         public virtual CardType Type { get; set; } = null!;
+        public virtual ICollection<ApplyingDiscount> ApplyingDiscounts { get; set; }
         public virtual ICollection<Card> Cards { get; set; }
     }
 }

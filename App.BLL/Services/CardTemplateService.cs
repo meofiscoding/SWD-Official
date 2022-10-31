@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using App.DAL.Models;
+using App.DAL.Entity;
 using App.DAL.Repositories.Contracts;
 using App.BLL.Services.Contracts;
 using Microsoft.EntityFrameworkCore;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models
+namespace App.DAL.Entity
 {
     public partial class ApplyingDiscount
     {
@@ -10,5 +10,6 @@ namespace App.DAL.Models
         public int DiscountId { get; set; }
 
         public virtual Discount Discount { get; set; } = null!;
+        public virtual TemplateCard TemplateCard { get; set; } = null!;
     }
 }

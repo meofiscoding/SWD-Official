@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.DAL.Models
+namespace App.DAL.Entity
 {
     public partial class Discount
     {

@@ -1,5 +1,5 @@
 ﻿using App.DAL.DataContext;
-using App.DAL.Models;
+using App.DAL.Entity;
 using App.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;

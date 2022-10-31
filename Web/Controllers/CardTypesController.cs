@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using App.DAL.DataContext;
-using App.DAL.Models;
+using App.DAL.Entity;
 using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 
