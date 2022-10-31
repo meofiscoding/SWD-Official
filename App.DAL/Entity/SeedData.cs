@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.DAL.Models
+namespace App.DAL.Entity
 {
     public class SeedData
     {

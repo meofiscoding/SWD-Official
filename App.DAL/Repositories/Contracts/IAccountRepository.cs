@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using App.DAL.Models;
+using App.DAL.Entity;
 
 namespace App.DAL.Repositories.Contracts
 {
