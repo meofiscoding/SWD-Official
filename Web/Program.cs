@@ -27,9 +27,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 //Repository Provider (Regist repository)
 builder.Services.AddTransient(typeof(IAccountRepository<>), typeof(AccountRepository<>));
 builder.Services.AddTransient(typeof(ICardTemplateRepository<>), typeof(CardTemplateRepository<>));
+builder.Services.AddTransient(typeof(ICardTypeRepository<>), typeof(CardTypeRepository<>));
 //Service Provider (Regist Service)
 builder.Services.AddScoped<ICardTemplateService, CardTemplateService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ICardTypeService, CardTypeService>();
 var cookiePolicyOptions = new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.Strict,

@@ -8,7 +8,7 @@ namespace App.BLL.Constant
 {
     public enum Role
     {
-        Admin =1,
+        Admin =7,
         Staff,
         User
     }

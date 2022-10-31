@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
-    [Authorize]
     public class TemplateCardsController : Controller
     {
         private readonly CMCContext _context;
@@ -26,11 +25,11 @@ namespace Web.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public TemplateCardsController(ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
-        {
-            _cardTemplateService = cardTemplateService;
-            _webHostEnvironment = webHostEnvironment;
-        }
+        // public TemplateCardsController(ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
+        // {
+        //     _cardTemplateService = cardTemplateService;
+        //     _webHostEnvironment = webHostEnvironment;
+        // }
 
         // GET: TemplateCards
         public async Task<IActionResult> Index()

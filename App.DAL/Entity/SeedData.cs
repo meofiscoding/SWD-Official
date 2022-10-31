@@ -18,63 +18,6 @@ namespace App.DAL.Entity
                     DbContextOptions<CMCContext>>()))
             {
                 // Look for any movies.
-                if (!context.Users.Any())
-                {
-
-                    context.Users.AddRange(
-                        new User
-                        {
-                            RoleId = 1,
-                            Username = "Jun",
-                            Email = "jun@gmail.com",
-                            Password = "123456",
-                            Fullname = "Jun Lee",
-                            PhoneNumber = "01234566",
-                            Address = "UK",
-                            IdentityNumber = "012345677",
-                            Status = 1
-                        },
-
-                          new User
-                          {
-                              RoleId = 2,
-                              Username = "Bunbeo",
-                              Email = "bun@gmail.com",
-                              Password = "123456",
-                              Fullname = "Lee Thi Bun Beo",
-                              PhoneNumber = "01234566",
-                              Address = "UK-VN",
-                              Status = 1,
-                              IdentityNumber = "012345677"
-                          },
-                            new User
-                            {
-                                RoleId = 3,
-                                Username = "Chuoibeo",
-                                Email = "chuoi@gmail.com",
-                                Password = "123456",
-                                Fullname = "Chuoi beo",
-                                PhoneNumber = "01234566",
-                                Address = "UK-VN",
-                                Status = 1,
-                                IdentityNumber = "012345677"
-                            },
-                              new User
-                              {
-                                  RoleId = 4,
-                                  Username = "Tea",
-                                  Email = "tea@gmail.com",
-                                  Password = "123456",
-                                  Fullname = "Tea Nguyen",
-                                  PhoneNumber = "01234566",
-                                  Address = "VN",
-                                  Status = 1,
-                                  IdentityNumber = "012345677"
-                              }
-                    );
-                }
-
-                // Look for any movies.
                 if (!context.Roles.Any())
                 {
                     context.Roles.AddRange(
@@ -95,6 +38,64 @@ namespace App.DAL.Entity
                         }
                     );
                 }
+                context.SaveChanges();
+                // Look for any movies.
+                if (!context.Users.Any())
+                {
+
+                    context.Users.AddRange(
+                        new User
+                        {
+                            RoleId = 7,
+                            Username = "Jun",
+                            Email = "jun@gmail.com",
+                            Password = "123456",
+                            Fullname = "Jun Lee",
+                            PhoneNumber = "01234566",
+                            Address = "UK",
+                            IdentityNumber = "012345677",
+                            Status = 1
+                        },
+
+                          new User
+                          {
+                              RoleId = 7,
+                              Username = "Bunbeo",
+                              Email = "bun@gmail.com",
+                              Password = "123456",
+                              Fullname = "Lee Thi Bun Beo",
+                              PhoneNumber = "01234566",
+                              Address = "UK-VN",
+                              Status = 1,
+                              IdentityNumber = "012345677"
+                          },
+                            new User
+                            {
+                                RoleId = 8,
+                                Username = "Chuoibeo",
+                                Email = "chuoi@gmail.com",
+                                Password = "123456",
+                                Fullname = "Chuoi beo",
+                                PhoneNumber = "01234566",
+                                Address = "UK-VN",
+                                Status = 1,
+                                IdentityNumber = "012345677"
+                            },
+                              new User
+                              {
+                                  RoleId = 9,
+                                  Username = "Tea",
+                                  Email = "tea@gmail.com",
+                                  Password = "123456",
+                                  Fullname = "Tea Nguyen",
+                                  PhoneNumber = "01234566",
+                                  Address = "VN",
+                                  Status = 1,
+                                  IdentityNumber = "012345677"
+                              }
+                    );
+                }
+                context.SaveChanges();
 
                 if (!context.CardTypes.Any())
                 {
@@ -118,61 +119,63 @@ namespace App.DAL.Entity
                               Detail = "An insurence for home"
                           });
                 }
+                context.SaveChanges();
+
                 if (!context.TemplateCards.Any())
                 {
                     context.TemplateCards.AddRange(
                         new TemplateCard
                         {
-                            TypeId = 10,
+                            TypeId = 7,
                             Title = "Liability coverage",
                             Price = 300,
                             Status = 1,
                         },
                          new TemplateCard
                          {
-                             TypeId = 10,
+                             TypeId = 7,
                              Title = "(UM) coverage",
                              Price = 30,
                              Status = 1,
                          },
                           new TemplateCard
                           {
-                              TypeId = 10,
+                              TypeId = 7,
                               Title = "Personal injury protection (PIP)",
                               Price = 30,
                               Status = 1,
                           },
                            new TemplateCard
                            {
-                               TypeId = 10,
+                               TypeId = 7,
                                Title = "Medical payment coverage",
                                Price = 30,
                                Status = 1,
                            },
                             new TemplateCard
                             {
-                                TypeId = 10,
+                                TypeId = 8,
                                 Title = "Comprehensive and collision coverage",
                                 Price = 30,
                                 Status = 1,
                             },
                              new TemplateCard
                              {
-                                 TypeId = 11,
+                                 TypeId = 8,
                                  Title = "Personal property coverage",
                                  Price = 30,
                                  Status = 1,
                              },
                               new TemplateCard
                               {
-                                  TypeId = 11,
+                                  TypeId = 8,
                                   Title = "Liability coverage. ",
                                   Price = 30,
                                   Status = 1,
                               },
                                new TemplateCard
                                {
-                                   TypeId = 11,
+                                   TypeId = 8,
                                    Title = "Dwelling coverage",
                                    Price = 30,
                                    Status = 1,
@@ -186,14 +189,14 @@ namespace App.DAL.Entity
                                 },
                                  new TemplateCard
                                  {
-                                     TypeId = 9,
+                                     TypeId = 8,
                                      Title = "Other structures on the property",
                                      Price = 30,
                                      Status = 1,
                                  },
                                   new TemplateCard
                                   {
-                                      TypeId = 9,
+                                      TypeId = 7,
                                       Title = "Liability coverage",
                                       Price = 30,
                                       Status = 1,

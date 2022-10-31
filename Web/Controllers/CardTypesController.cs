@@ -9,33 +9,43 @@ using App.DAL.DataContext;
 using App.DAL.Entity;
 using Humanizer;
 using Microsoft.AspNetCore.Authorization;
+using App.BLL.Services.Contracts;
 
 namespace Web.Controllers
 {
-    [Authorize]
     public class CardTypesController : Controller
     {
         private readonly CMCContext _context;
+
+        private readonly ICardTypeService _cardTypeService;
+
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CardTypesController(CMCContext context, IWebHostEnvironment webHostEnvironment)
+        public CardTypesController(CMCContext context, ICardTypeService cardTypeService, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _cardTypeService = cardTypeService;
             _webHostEnvironment = webHostEnvironment;
         }
+
+        //public CardTypesController(ICardTypeService cardTypeService, IWebHostEnvironment webHostEnvironment)
+        //{
+        //    _cardTypeService = cardTypeService;
+        //    _webHostEnvironment = webHostEnvironment;
+        //}
 
 
 
         // GET: CardTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CardTypes.Where(m => m.Status == 1).ToListAsync());
+            return View(await _cardTypeService.GetCardTypesAsync());
         }
 
         // GET: CardTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.CardTypes == null)
+            if (id == null)
             {
                 return NotFound();
             }

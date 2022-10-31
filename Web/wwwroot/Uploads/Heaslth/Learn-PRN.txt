@@ -1,0 +1,67 @@
+Common Toolbox
+
+* TextBlock in XAML
+  - Block of text (like label)
+  - TextTrimming: Không cho Text box bị dài quá màn hình, chữ dài hơn chuyển thành ...
+  - TextWrapping: Wrapping hết về tới khung màn hình, thừa thì xuống dòng
+    + WrapWithOverFlow: Nếu 1 từ nào đó rất dài cuối câu, sẽ bị cắt đi, dòng mới là từ khác
+    + Wrap: Nếu 1 từ rất dài cuối dòng bị cắt thì ở dòng mới là kí tự tiếp theo
+  - Span: Thêm thẻ để xaml
+
+* TextBlock in code behind: 
+  - 
+* ComboBox
+
+
+* DockPanel 
+  - Control bên trong sẽ neo theo góc nào đó 
+  - LastChildFill: Phần tử cuối cùng của DockPanel
+
+BTVN
+* Demo tất cả control còn lại đến phần data grid
+* Thiết kế bài tập lab 
+
+Về nhà: 
+
+Canvas trong WPF là gì
+StackPanel: Chia theo ngăn
+WrapPanel: Break Content 
+Grid 
+
+Microsoft.Data.SqlClient(2.1.2)
+Microsoft.EntityFrameworkCore.Design (5.0.12)
+Microsoft.EntityFrameworkCore.SqlServer (5.0.12)
+Microsoft.Extensions.Configuration (5.0.0)
+Microsoft.Extensions.Configuration.Json (5.0.0)
+
+1. Partial class
+2.
+
+Thi sẽ sử dụng EF core. 
+
+Thao tác với EF Framework: 
+cài: dotnet tool install --global dotnet-ef --version 5.0.1
+gỡ: dotnet tool uninstall --global dotnet-ef
+
+Thứ tự:
+1. Sinh Database model theo dtb first:
+dotnet ef dbcontext scaffold "server =(local); database = Northwind;uid=sa;pwd=19112001" Microsoft.EntityFrameworkCore.SqlServer --output-dir DataAccess
+2. Tạo file appsettings.json => Properties chuyển thành copy always
+{
+  "ConnectionStrings": {
+    "MyStockDB": "server=(local);uid=sa;pwd=1234;database=MyStock"
+  }
+}
+3. sửa trong class OnConfiguring 
+var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            IConfigurationRoot configuration = builder.Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("MyStockDB"));
+
+
+car = context.Cars.SingleOrDefault (c => c.CarId == carId);
+
+Nếu dtb first thì phải chạy câu lệnh cũ và thêm '-f' 
+
+Combo box with type of car to choose
