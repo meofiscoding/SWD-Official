@@ -24,5 +24,10 @@ namespace App.DAL.Repositories
         {
             return _cmcContext.TemplateCards.Include(t => t.Type);
         }
+
+        IQueryable<TemplateCard>? ICardTemplateRepository<TModel>.GetCardTemplatesByCardType(int? id)
+        {
+            return _cmcContext.TemplateCards.Where(t => t.TypeId == id);
+        }
     }
 }

@@ -32,5 +32,24 @@ namespace App.BLL.Services
                 throw;
             }
         }
+
+        public List<TemplateCard>? GetCardTemplatesByCardType(int? id)
+        {
+            try
+            {
+                var cardtemplates = _cardTemplateRepository.GetCardTemplatesByCardType(id);
+
+                if (cardtemplates != null)
+                {
+                    return cardtemplates.ToList();
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

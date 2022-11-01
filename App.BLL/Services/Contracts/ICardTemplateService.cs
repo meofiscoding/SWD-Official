@@ -11,5 +11,6 @@ namespace App.BLL.Services.Contracts
     public interface ICardTemplateService
     {
         Task<List<TemplateCard>> GetCardTemplates();
+        List<TemplateCard>? GetCardTemplatesByCardType(int? id);
     }
 }

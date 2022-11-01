@@ -18,24 +18,18 @@ namespace Web.Controllers
         private readonly CMCContext _context;
 
         private readonly ICardTypeService _cardTypeService;
+        private readonly ICardTemplateService _cardTemplateService;
 
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CardTypesController(CMCContext context, ICardTypeService cardTypeService, IWebHostEnvironment webHostEnvironment)
+        public CardTypesController(CMCContext context, ICardTypeService cardTypeService, ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _cardTypeService = cardTypeService;
+            _cardTemplateService = cardTemplateService;
             _webHostEnvironment = webHostEnvironment;
-        }
-
-        //public CardTypesController(ICardTypeService cardTypeService, IWebHostEnvironment webHostEnvironment)
-        //{
-        //    _cardTypeService = cardTypeService;
-        //    _webHostEnvironment = webHostEnvironment;
-        //}
-
-
-
+        } 
+         
         // GET: CardTypes
         public async Task<IActionResult> Index()
         {
@@ -49,14 +43,14 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            ViewBag.TypeName = _context.CardTypes.Find(id).TypeName.ToString();
-            var cardType = await _context.TemplateCards.Where(t=>t.TypeId == id).ToListAsync();
-            if (cardType == null)
+            ViewBag.TypeName = _cardTypeService.GetCardTypeName(id);
+            var templateCards = _cardTemplateService.GetCardTemplatesByCardType(id);
+            if (templateCards == null)
             {
                 return NotFound();
             }
 
-            return View(cardType);
+            return View(templateCards);
         }
 
         // GET: CardTypes/Create
@@ -75,8 +69,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 cardType.Status = 1;
-                _context.Add(cardType);
-                await _context.SaveChangesAsync();
+                await  _cardTypeService.CreateCard(cardType); 
                 return RedirectToAction(nameof(Index));
             }
             return View(cardType);
@@ -85,12 +78,12 @@ namespace Web.Controllers
         // GET: CardTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.CardTypes == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var cardType = await _context.CardTypes.FindAsync(id);
+            var cardType = _cardTypeService.FindCardTypes(id);
             if (cardType == null)
             {
                 return NotFound();
@@ -115,8 +108,7 @@ namespace Web.Controllers
                 try
                 {
                     cardType.Status = 1;
-                    _context.Update(cardType);
-                    await _context.SaveChangesAsync();
+                    await _cardTypeService.UpdateCard(cardType);
                 }
                 catch (Exception)
                 {
@@ -132,25 +124,7 @@ namespace Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(cardType);
-        }
-
-        //// GET: CardTypes/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.CardTypes == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var cardType = await _context.CardTypes
-        //        .FirstOrDefaultAsync(m => m.TypeId == id);
-        //    if (cardType == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(cardType);
-        //}
+        } 
 
         // POST: CardTypes/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -161,30 +135,35 @@ namespace Web.Controllers
             {
                 return Problem("Entity set 'CMCContext.CardTypes'  is null.");
             }
-            var cardType = await _context.CardTypes.FirstOrDefaultAsync(m => m.TypeId == id);
+            var cardType = _cardTypeService.FindCardTypes(id);
             if (cardType != null)
             {
                 string webRootPath = _webHostEnvironment.WebRootPath;
-                var path = Path.Combine(webRootPath + "\\Uploads\\" + _context.CardTypes.Find(id).TypeName);
+                var path = Path.Combine(webRootPath + "\\Uploads\\" + _cardTypeService.FindCardTypes(id).TypeName);
                 if (Directory.Exists(Path.GetDirectoryName(path))) {
-                    Directory.Delete(Path.GetDirectoryName(path));
+                    try
+                    {
+                        Directory.Delete(path,true);
+                    }
+                    catch (Exception)
+                    {
+                        Thread.Sleep(2000);     //wait 2 seconds
+                        Directory.Delete(path, recursive: true);
+                    }
                 }
-                //_context.CardTypes.Remove(cardType);
                 cardType.Status = 0;
-                _context.Update(cardType);
             }
             else
             {
                 return NotFound();
             }
-
-            await _context.SaveChangesAsync();
+            await _cardTypeService.UpdateCard(cardType); 
             return RedirectToAction(nameof(Index));
         }
 
         private bool CardTypeExists(int id)
         {
-            return _context.CardTypes.Any(e => e.TypeId == id);
+            return _cardTypeService.IsExistCardTypes(id); 
         }
     }
 }
