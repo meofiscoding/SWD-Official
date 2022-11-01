@@ -12,6 +12,12 @@ namespace App.DAL.Repositories.Contracts
     public interface ICardTemplateRepository<TModels> where TModels : class
     {
         IIncludableQueryable<TemplateCard,CardType> GetCardTemplates();
-        IQueryable<TemplateCard>? GetCardTemplatesByCardType(int? id);
+        TemplateCard GetDetails(int? id);
+        Task AddCard(TemplateCard templateCard);
+        TemplateCard FindCardTemplate(int? id);
+        Task UpdateCard(TemplateCard templateCard);
+        bool IsExist(int id);
+        List<TemplateCard> GetTemplatesCard(int? id);
+        Task RemoveCard(TemplateCard templateCard);
     }
 }

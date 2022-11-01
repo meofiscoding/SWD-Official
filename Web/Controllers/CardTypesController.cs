@@ -15,21 +15,21 @@ namespace Web.Controllers
 {
     public class CardTypesController : Controller
     {
-        private readonly CMCContext _context;
 
         private readonly ICardTypeService _cardTypeService;
         private readonly ICardTemplateService _cardTemplateService;
 
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CardTypesController(CMCContext context, ICardTypeService cardTypeService, ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
+        public CardTypesController(ICardTypeService cardTypeService, ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
             _cardTypeService = cardTypeService;
             _cardTemplateService = cardTemplateService;
             _webHostEnvironment = webHostEnvironment;
-        } 
-         
+        }
+
+
+
         // GET: CardTypes
         public async Task<IActionResult> Index()
         {
@@ -39,12 +39,12 @@ namespace Web.Controllers
         // GET: CardTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null )    
             {
                 return NotFound();
             }
             ViewBag.TypeName = _cardTypeService.GetCardTypeName(id);
-            var templateCards = _cardTemplateService.GetCardTemplatesByCardType(id);
+            var templateCards = _cardTemplateService.GetCardTemplatesByTypes(id);
             if (templateCards == null)
             {
                 return NotFound();
@@ -130,11 +130,7 @@ namespace Web.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.CardTypes == null)
-            {
-                return Problem("Entity set 'CMCContext.CardTypes'  is null.");
-            }
+        { 
             var cardType = _cardTypeService.FindCardTypes(id);
             if (cardType != null)
             {

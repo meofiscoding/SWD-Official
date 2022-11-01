@@ -9,6 +9,7 @@ using App.DAL.Entity;
 using App.DAL.DataContext;
 using App.BLL.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 namespace Web.Controllers
 {
@@ -23,13 +24,7 @@ namespace Web.Controllers
             _context = context;
             _cardTemplateService = cardTemplateService;
             _webHostEnvironment = webHostEnvironment;
-        }
-
-        // public TemplateCardsController(ICardTemplateService cardTemplateService, IWebHostEnvironment webHostEnvironment)
-        // {
-        //     _cardTemplateService = cardTemplateService;
-        //     _webHostEnvironment = webHostEnvironment;
-        // }
+        } 
 
         // GET: TemplateCards
         public async Task<IActionResult> Index()
@@ -40,14 +35,11 @@ namespace Web.Controllers
         // GET: TemplateCards/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.TemplateCards == null)
+            if (id == null)
             {
                 return NotFound();
-            }
-
-            var templateCard = await _context.TemplateCards
-                .Include(t => t.Type)
-                .FirstOrDefaultAsync(m => m.TemplateId == id);
+            } 
+            var templateCard = _cardTemplateService.GetDetailCardtemplateByType(id);
             if (templateCard == null)
             {
                 return NotFound();
@@ -91,8 +83,7 @@ namespace Web.Controllers
                 }
                 templateCard.Status = 1;
                 templateCard.FileName = filename;
-                _context.Add(templateCard);
-                await _context.SaveChangesAsync();
+                await _cardTemplateService.AddCardTemplate(templateCard);
                 return RedirectToAction("Index","CardTypes");
             }
             ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
@@ -107,7 +98,7 @@ namespace Web.Controllers
                 return NotFound();
             }
 
-            var templateCard = await _context.TemplateCards.FindAsync(id);
+            var templateCard =  _cardTemplateService.FindTemplateCard(id);
             if (templateCard == null)
             {
                 return NotFound();
@@ -121,7 +112,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TemplateId,TypeId,Title,Price,Status,FileName")] TemplateCard templateCard, IFormFile FileUpload)
+        public async Task<IActionResult> Edit(int id, [Bind("TemplateId,TypeId,Title,Price,Status,FileName")] TemplateCard templateCard, IFormFile FileUpload, string deletedFile)
         {
             if (id != templateCard.TemplateId)
             {
@@ -133,13 +124,17 @@ namespace Web.Controllers
                 try
                 {
                     var filename = "";
-                    if (FileUpload!=null)
+                    if (!string.IsNullOrEmpty(deletedFile))
                     {
                         //Store file in directory
                         string webRootPath = _webHostEnvironment.WebRootPath;
                         //string contentRootPath = _webHostEnvironment.ContentRootPath;
                         filename = FileUpload.FileName;
                         var path = Path.Combine(webRootPath + "\\Uploads\\" + _context.CardTypes.Find(templateCard.TypeId).TypeName, filename);
+                        if (System.IO.File.Exists($"{path}\\{deletedFile}"))
+                        {
+                            System.IO.File.Delete($"{path}\\{deletedFile}");
+                        }
                         if (Directory.Exists(Path.GetDirectoryName(path)) == false) { Directory.CreateDirectory(Path.GetDirectoryName(path)); }
                         if (FileUpload.Length > 0)
                         {
@@ -150,8 +145,8 @@ namespace Web.Controllers
                         }
                     }
                     templateCard.FileName = filename;
-                    _context.Update(templateCard);
-                    await _context.SaveChangesAsync();
+                    await _cardTemplateService.UpdateCardTemplate(templateCard);
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -168,26 +163,7 @@ namespace Web.Controllers
             }
             ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
             return View(templateCard);
-        }
-
-        // GET: TemplateCards/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.TemplateCards == null)
-            {
-                return NotFound();
-            }
-
-            var templateCard = await _context.TemplateCards
-                .Include(t => t.Type)
-                .FirstOrDefaultAsync(m => m.TemplateId == id);
-            if (templateCard == null)
-            {
-                return NotFound();
-            }
-
-            return View(templateCard);
-        }
+        } 
 
         // POST: TemplateCards/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -198,18 +174,17 @@ namespace Web.Controllers
             {
                 return Problem("Entity set 'CMCContext.TemplateCards'  is null.");
             }
-            var templateCard = await _context.TemplateCards.FindAsync(id);
+            var templateCard = _cardTemplateService.FindTemplateCard(id);
             if (templateCard != null)
             {
-               templateCard.Status = 0;
+                await _cardTemplateService.RemoveCardTemplate(templateCard);
             }
-            await _context.SaveChangesAsync();
             return RedirectToAction("Details", "CardTypes", new {id=templateCard.TypeId});
         }
 
         private bool TemplateCardExists(int id)
         {
-          return _context.TemplateCards.Any(e => e.TemplateId == id);
+          return _cardTemplateService.IsExist(id);
         }
     }
 }

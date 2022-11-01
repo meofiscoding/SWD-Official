@@ -20,6 +20,16 @@ namespace App.BLL.Services
             _cardTemplateRepository = cardTemplateRepository;
         }
 
+        public Task AddCardTemplate(TemplateCard templateCard)
+        {
+            return _cardTemplateRepository.AddCard(templateCard);
+        }
+
+        public TemplateCard FindTemplateCard(int? id)
+        {
+            return _cardTemplateRepository.FindCardTemplate(id);
+        }
+
         public async Task<List<TemplateCard>> GetCardTemplates()
         {
             try
@@ -33,23 +43,29 @@ namespace App.BLL.Services
             }
         }
 
-        public List<TemplateCard>? GetCardTemplatesByCardType(int? id)
+        public List<TemplateCard> GetCardTemplatesByTypes(int? id)
         {
-            try
-            {
-                var cardtemplates = _cardTemplateRepository.GetCardTemplatesByCardType(id);
+            return _cardTemplateRepository.GetTemplatesCard(id);
+        }
 
-                if (cardtemplates != null)
-                {
-                    return cardtemplates.ToList();
-                }
-                return null;
-            }
-            catch (Exception)
-            {
+        public TemplateCard GetDetailCardtemplateByType(int? id)
+        {
+            return _cardTemplateRepository.GetDetails(id);
+        }
 
-                throw;
-            }
+        public bool IsExist(int id)
+        {
+            return _cardTemplateRepository.IsExist(id);
+        }
+
+        public Task RemoveCardTemplate(TemplateCard templateCard)
+        {
+            return _cardTemplateRepository.RemoveCard(templateCard);
+        }
+
+        public Task UpdateCardTemplate(TemplateCard templateCard)
+        {
+            return _cardTemplateRepository.UpdateCard(templateCard);
         }
     }
 }

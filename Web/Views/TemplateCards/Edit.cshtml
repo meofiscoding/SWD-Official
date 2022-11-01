@@ -18,7 +18,8 @@
                         <select asp-for="TypeId" id="exampleFormControlSelect1" class="form-select" asp-items="ViewBag.TypeId"></select>
                     </div>
                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" form="@Model.Status" type="checkbox" id="flexSwitchCheckChecked" @(Model.Status == 1?"checked":"")>
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"  @(Model.Status == 1?"checked":"")>
+                        <input type="hidden" asp-for="Status" value="@Model.Status" />
                         <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
                       </div>
                     <div class="mb-3">
@@ -46,6 +47,7 @@
                                                 <div style="display:flex; flex-direction: column">
                                                     <span class="name" style="font-size:14px"> @Model.FileName - Uploaded  </span>
                                                 </div>
+                                                <input type="hidden" name = "deletedFile"/>
                                                 <span class="percent" style="display:flex"> <a href="/Uploads/@Model.Type.TypeName/@Model.FileName" class='bx bxs-download' style="font-size:20px; margin-right: 10px; cursor:pointer" download></a> <i class='bx bxs-trash' style="cursor:pointer"></i></span>
                                             </div>
                                         </div>
@@ -89,6 +91,16 @@
         update_index = file.length;
     })
 
+
+    //on input type checkbox change 
+    $("#flexSwitchCheckChecked").change(function(){
+        if($(this).is(":checked")){
+            $("input[name='Status']").val(1)
+        }else{
+            $("input[name='Status']").val(0)
+        }
+    })
+    
     function bytesToSize(bytes) {
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
          if (bytes == 0) return '0 Byte';
@@ -135,6 +147,8 @@
     }
 
       $(".bxs-trash").click(function(){
+              //set value for input name = deletedFile
+              $("input[name='deletedFile']").val(@Model.FileName);
               $(".attachment").remove();
               let uploaded_area =     ` <div class="mb-3">
                                         <label for="formFile" class="form-label">Attachments</label>
