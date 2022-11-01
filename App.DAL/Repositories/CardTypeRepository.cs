@@ -1,6 +1,7 @@
 ﻿using App.DAL.DataContext;
 using App.DAL.Entity;
 using App.DAL.Repositories.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,13 @@ namespace App.DAL.Repositories
             await _cmcContext.SaveChangesAsync();
         }
 
-        public Task DeleteCard(CardType cardTypeEntity)
+        public Task DeleteCard(int id)
         {
-            _cmcContext.Remove(cardTypeEntity);
+            var cardType = _cmcContext.CardTypes.Find(id);
+            //remove all cardtemplate that have this cardtype
+            var cardTemplates = _cmcContext.TemplateCards.Where(t => t.TypeId == id);
+            _cmcContext.TemplateCards.RemoveRange(cardTemplates);
+            _cmcContext.CardTypes.Remove(cardType) ;
             return _cmcContext.SaveChangesAsync();
         }
 
@@ -37,7 +42,8 @@ namespace App.DAL.Repositories
 
         public IQueryable<CardType> GetCardTypes()
         {
-            return _cmcContext.CardTypes.Where(m => m.Status == 1);
+            //get all card type 
+            return _cmcContext.CardTypes;
         }
 
         public string GetTypeName(int? id)

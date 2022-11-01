@@ -58,9 +58,10 @@ namespace App.DAL.Repositories
            return _cmcContext.TemplateCards.Where(t => t.TypeId == id).ToList();
         }
 
-        public Task RemoveCard(TemplateCard templateCard)
+        public Task RemoveCard(int id)
         {
-             _cmcContext.TemplateCards.Remove(templateCard);
+            var cardTemplate = _cmcContext.TemplateCards.Find(id);
+             _cmcContext.TemplateCards.Remove(cardTemplate);
             return _cmcContext.SaveChangesAsync();
         }
     }

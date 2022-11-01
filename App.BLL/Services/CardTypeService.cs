@@ -22,7 +22,8 @@ namespace App.BLL.Services
             {
                 TypeId = cardType.TypeId,
                 TypeName = cardType.TypeName,
-                Status = cardType.Status 
+                Status = cardType.Status ,
+                Detail = cardType.Detail
             }; 
             return _cardTypeRepository.CreateCard(cardTypeEntity);
         } 
@@ -65,7 +66,8 @@ namespace App.BLL.Services
             {
                 TypeId = cardType.TypeId,
                 TypeName = cardType.TypeName,
-                Status = cardType.Status 
+                Status = cardType.Status ,
+                Detail = cardType.Detail
             };
             return _cardTypeRepository.UpdateCard(cardTypeEntity);
         }
@@ -85,7 +87,7 @@ namespace App.BLL.Services
                         Status = item.Status,
                         Detail = item.Detail,
                         CreatedAt = item.CreatedAt,
-                        UpdatedAt = item.UpdatedAt 
+                        UpdatedAt = item.UpdatedAt
                     });
                 };
                 return cardTypesDTO;
@@ -97,16 +99,9 @@ namespace App.BLL.Services
             }
         }
 
-        public Task Delete(CardTypeDTO cardType)
+        public Task Delete(int id)
         {
-            //convert cardType to CardType Entity
-            var cardTypeEntity = new CardType
-            {
-                TypeId = cardType.TypeId,
-                TypeName = cardType.TypeName,
-                Status = cardType.Status 
-            };
-            return _cardTypeRepository.DeleteCard(cardTypeEntity);
+            return _cardTypeRepository.DeleteCard(id);
         }
     }
 }

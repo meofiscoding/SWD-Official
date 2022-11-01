@@ -82,7 +82,7 @@ namespace Web.Controllers
                     //string contentRootPath = _webHostEnvironment.ContentRootPath;
                     filename = FileUpload.FileName;
                     var path = Path.Combine(webRootPath + "\\Uploads\\" + _cardTypeService.FindCardTypes(templateCard.TypeId).TypeName, filename);
-                    if (Directory.Exists(Path.GetDirectoryName(path)) == false) { Directory.CreateDirectory(Path.GetDirectoryName(path)); }
+                    if (Directory.Exists(path) == false) { Directory.CreateDirectory(Path.GetDirectoryName(path)); }
                     if (FileUpload.Length > 0)
                     {
                         using (Stream fileStream = new FileStream(path, FileMode.Create))
@@ -123,7 +123,20 @@ namespace Web.Controllers
                 return NotFound();
             }
             ViewData["TypeId"] = new SelectList(_context.CardTypes, "TypeId", "TypeName", templateCard.TypeId);
-            return View(templateCard);
+            //convert to TemplateCardviewModel
+            var templateCardViewModel = new TemplateCardViewModel
+            {
+                TemplateId = templateCard.TemplateId,
+                Title = templateCard.Title,
+                TypeId = templateCard.TypeId,
+                Price = templateCard.Price,
+                Status = templateCard.Status,
+                CreatedAt = templateCard.CreatedAt,
+                UpdatedAt = templateCard.UpdatedAt,
+                FileName = templateCard.FileName,
+                TypeName = templateCard.TypeName
+            };
+            return View(templateCardViewModel);
         }
 
         // POST: TemplateCards/Edit/5
@@ -206,7 +219,7 @@ namespace Web.Controllers
             var templateCard = _cardTemplateService.FindTemplateCard(id);
             if (templateCard != null)
             {
-                await _cardTemplateService.RemoveCardTemplate(templateCard);
+                await _cardTemplateService.RemoveCardTemplate(id);
             }
             return RedirectToAction("Details", "CardTypes", new { id = templateCard.TypeId });
         }

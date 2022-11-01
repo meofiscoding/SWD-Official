@@ -18,6 +18,6 @@ namespace App.DAL.Repositories.Contracts
         Task UpdateCard(TemplateCard templateCard);
         bool IsExist(int id);
         List<TemplateCard> GetTemplatesCard(int? id);
-        Task RemoveCard(TemplateCard templateCard);
+        Task RemoveCard(int id);
     }
 }

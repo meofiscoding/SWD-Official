@@ -40,7 +40,8 @@ namespace Web.Controllers
                 TypeId = c.TypeId,
                 TypeName = c.TypeName,
                 Detail = c.Detail,
-                CardTypeUpdatedAt = c.UpdatedAt,
+                TemplateId = c.TemplateID,
+                CardTypeUpdatedAt = c.UpdatedAt
             }).ToList();  
             return View(cardTypeViewModels);
         }
@@ -59,7 +60,8 @@ namespace Web.Controllers
             {
                 Title = c.Title,
                 Price = c.Price,
-                TemplateCardStatus = c.Status
+                TemplateCardStatus = c.Status,
+                TemplateId = c.TemplateId
             }).ToList(); 
 
             if (templateCards == null)
@@ -175,14 +177,14 @@ namespace Web.Controllers
             {
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 var path = Path.Combine(webRootPath + "\\Uploads\\" + _cardTypeService.FindCardTypes(id).TypeName);
-                if (Directory.Exists(Path.GetDirectoryName(path))) {
+                if (Directory.Exists(path)) {
                     try
                     {
                         Directory.Delete(path,true);
                     }
                     catch (Exception)
                     {
-                        Thread.Sleep(2000);     //wait 2 seconds
+                        Thread.Sleep(1000);     //wait 2 seconds
                         Directory.Delete(path, recursive: true);
                     }
                 }
@@ -191,7 +193,7 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-            await _cardTypeService.Delete(cardType); 
+            await _cardTypeService.Delete(id); 
             return RedirectToAction(nameof(Index));
         }
 

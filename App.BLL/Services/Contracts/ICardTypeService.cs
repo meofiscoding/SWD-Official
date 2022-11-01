@@ -16,6 +16,6 @@ namespace App.BLL.Services.Contracts
         CardTypeDTO FindCardTypes(int? id);
         Task UpdateCard(CardTypeDTO cardType);
         bool IsExistCardTypes(int id);
-        Task Delete(CardTypeDTO cardType);
+        Task Delete(int id);
     }
 }

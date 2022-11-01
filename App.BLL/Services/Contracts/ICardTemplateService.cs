@@ -17,6 +17,6 @@ namespace App.BLL.Services.Contracts
         Task UpdateCardTemplate(CardTemplateDTO templateCard);
         bool IsExist(int id);
         List<CardTemplateDTO> GetCardTemplatesByTypes(int? id);
-        Task RemoveCardTemplate(CardTemplateDTO templateCard);
+        Task RemoveCardTemplate(int id);
     }
 }

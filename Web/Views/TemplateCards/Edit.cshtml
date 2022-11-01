@@ -1,4 +1,4 @@
-﻿@model App.DAL.Entity.TemplateCard
+﻿@model TemplateCardViewModel
 
 @{
     ViewData["Title"] = "Card";
@@ -48,7 +48,7 @@
                                                     <span class="name" style="font-size:14px"> @Model.FileName - Uploaded  </span>
                                                 </div>
                                                 <input type="hidden" name = "deletedFile"/>
-                                                <span class="percent" style="display:flex"> <a href="/Uploads/@Model.Type.TypeName/@Model.FileName" class='bx bxs-download' style="font-size:20px; margin-right: 10px; cursor:pointer" download></a> <i class='bx bxs-trash' style="cursor:pointer"></i></span>
+                                                <span class="percent" style="display:flex"> <a href="/Uploads/@Model.TypeName/@Model.FileName" class='bx bxs-download' style="font-size:20px; margin-right: 10px; cursor:pointer" download></a> <i class='bx bxs-trash' style="cursor:pointer"></i></span>
                                             </div>
                                         </div>
                                     </li>

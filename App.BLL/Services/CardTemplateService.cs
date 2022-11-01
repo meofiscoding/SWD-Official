@@ -133,21 +133,9 @@ namespace App.BLL.Services
             return _cardTemplateRepository.IsExist(id);
         }
 
-        public Task RemoveCardTemplate(CardTemplateDTO templateCard)
-        {
-            //convert templateCard to CardTemplate Entity
-            var cardTemplate = new TemplateCard
-            {
-                TemplateId = templateCard.TemplateId,
-                TypeId = templateCard.TypeId,
-                Title = templateCard.Title,
-                Price = templateCard.Price,
-                Status = templateCard.Status,
-                CreatedAt = templateCard.CreatedAt,
-                UpdatedAt = templateCard.UpdatedAt,
-                FileName = templateCard.FileName
-            };
-            return _cardTemplateRepository.RemoveCard(cardTemplate);
+        public Task RemoveCardTemplate(int id)
+        { 
+            return _cardTemplateRepository.RemoveCard(id);
         }
 
         public Task UpdateCardTemplate(CardTemplateDTO templateCard)

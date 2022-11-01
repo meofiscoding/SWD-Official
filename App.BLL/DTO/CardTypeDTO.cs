@@ -14,5 +14,6 @@ namespace App.BLL.DTO
         public string? Detail { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public int TemplateID { get; set; }
     }
 }
