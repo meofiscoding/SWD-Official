@@ -10,6 +10,8 @@ using App.DAL.Entity;
 using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using App.BLL.Services.Contracts;
+using Web.Models;
+using App.BLL.DTO;
 
 namespace Web.Controllers
 {
@@ -26,14 +28,21 @@ namespace Web.Controllers
             _cardTypeService = cardTypeService;
             _cardTemplateService = cardTemplateService;
             _webHostEnvironment = webHostEnvironment;
-        }
+        } 
 
-
-
-        // GET: CardTypes
+         // GET: CardTypes
         public async Task<IActionResult> Index()
         {
-            return View(await _cardTypeService.GetCardTypesAsync());
+            var cardTypes = await _cardTypeService.GetCardTypesAsync();
+            //convert cardTypes to list of CardTypeViewModel
+            var cardTypeViewModels = cardTypes.Select(c => new CardTypeViewModel
+            {
+                TypeId = c.TypeId,
+                TypeName = c.TypeName,
+                Detail = c.Detail,
+                CardTypeUpdatedAt = c.UpdatedAt,
+            }).ToList();  
+            return View(cardTypeViewModels);
         }
 
         // GET: CardTypes/Details/5
@@ -45,12 +54,20 @@ namespace Web.Controllers
             }
             ViewBag.TypeName = _cardTypeService.GetCardTypeName(id);
             var templateCards = _cardTemplateService.GetCardTemplatesByTypes(id);
+            //convert list templateCards to list CardTypeViewModel
+            var cardTypeViewModels = templateCards.Select(c => new CardTypeViewModel
+            {
+                Title = c.Title,
+                Price = c.Price,
+                TemplateCardStatus = c.Status
+            }).ToList(); 
+
             if (templateCards == null)
             {
                 return NotFound();
             }
 
-            return View(templateCards);
+            return View(cardTypeViewModels);
         }
 
         // GET: CardTypes/Create
@@ -64,12 +81,19 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TypeId,TypeName,Status,Detail")] CardType cardType)
+        public async Task<IActionResult> Create([Bind("TypeId,TypeName,CardTypeStatus,Detail")] CardTypeViewModel cardType)
         {
             if (ModelState.IsValid)
             {
-                cardType.Status = 1;
-                await  _cardTypeService.CreateCard(cardType); 
+                cardType.CardTypeStatus = 1;
+                //convert cardType to cardTypeDTO
+                var cardTypeDTO = new CardTypeDTO
+                {
+                    TypeName = cardType.TypeName,
+                    Detail = cardType.Detail,
+                    Status = cardType.CardTypeStatus
+                };
+                await  _cardTypeService.CreateCard(cardTypeDTO); 
                 return RedirectToAction(nameof(Index));
             }
             return View(cardType);
@@ -82,13 +106,20 @@ namespace Web.Controllers
             {
                 return NotFound();
             }
-
             var cardType = _cardTypeService.FindCardTypes(id);
-            if (cardType == null)
+            //convert cardType to cardTypeViewModel
+            var cardTypeViewModel = new CardTypeViewModel
+            {
+                TypeId = cardType.TypeId,
+                TypeName = cardType.TypeName,
+                Detail = cardType.Detail,
+                CardTypeStatus = cardType.Status
+            };
+            if (cardTypeViewModel == null)
             {
                 return NotFound();
             }
-            return View(cardType);
+            return View(cardTypeViewModel);
         }
 
         // POST: CardTypes/Edit/5
@@ -96,7 +127,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TypeId,TypeName,Detail")] CardType cardType)
+        public async Task<IActionResult> Edit(int id, [Bind("TypeId,TypeName,Detail")] CardTypeViewModel cardType)
         {
             if (id != cardType.TypeId)
             {
@@ -107,8 +138,16 @@ namespace Web.Controllers
             {
                 try
                 {
-                    cardType.Status = 1;
-                    await _cardTypeService.UpdateCard(cardType);
+                    cardType.CardTypeStatus = 1;
+                    //convert cardType to cardTypeDTO
+                    var cardTypeDTO = new CardTypeDTO
+                    {
+                        TypeId = cardType.TypeId,
+                        TypeName = cardType.TypeName,
+                        Detail = cardType.Detail,
+                        Status = cardType.CardTypeStatus
+                    };
+                    await _cardTypeService.UpdateCard(cardTypeDTO);
                 }
                 catch (Exception)
                 {
@@ -147,13 +186,12 @@ namespace Web.Controllers
                         Directory.Delete(path, recursive: true);
                     }
                 }
-                cardType.Status = 0;
             }
             else
             {
                 return NotFound();
             }
-            await _cardTypeService.UpdateCard(cardType); 
+            await _cardTypeService.Delete(cardType); 
             return RedirectToAction(nameof(Index));
         }
 

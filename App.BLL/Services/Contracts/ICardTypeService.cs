@@ -1,4 +1,5 @@
-﻿using App.DAL.Entity;
+﻿using App.BLL.DTO;
+using App.DAL.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace App.BLL.Services.Contracts
 {
     public interface ICardTypeService
     {
-        public Task<List<CardType>> GetCardTypesAsync();
+        public Task<List<CardTypeDTO>> GetCardTypesAsync();
         public string GetCardTypeName(int? id);
-        Task CreateCard(CardType cardType);
-        CardType FindCardTypes(int? id);
-        Task UpdateCard(CardType cardType);
-        bool IsExistCardTypes(int id); 
+        Task CreateCard(CardTypeDTO cardType);
+        CardTypeDTO FindCardTypes(int? id);
+        Task UpdateCard(CardTypeDTO cardType);
+        bool IsExistCardTypes(int id);
+        Task Delete(CardTypeDTO cardType);
     }
 }

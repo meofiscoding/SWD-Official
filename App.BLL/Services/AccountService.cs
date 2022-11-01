@@ -19,20 +19,25 @@ namespace App.BLL.Services
             _userRepository = userRepository;
         }
 
+        public int GetRoleIDByName(string role)
+        {
+            return _userRepository.GetRoleByName(role);
+        }
+
         public bool Login(string username, string password)
         {
            
             try
             {
                 var user = _userRepository.Login(username,password);
-                if (user != null && user.RoleId == (int)Constant.Role.Admin)
+                if (user != null && user.RoleId ==  _userRepository.GetRoleByName("Admin"))
                 {
                     return true;
                 }
                 else
                 {
                     return false;
-                }
+                } 
             }
             catch (Exception)
             {

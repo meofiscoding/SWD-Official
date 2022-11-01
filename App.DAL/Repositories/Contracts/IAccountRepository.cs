@@ -11,5 +11,6 @@ namespace App.DAL.Repositories.Contracts
     public interface IAccountRepository<TModels> where TModels : class
     {
         User Login(string username, string password);
+        int GetRoleByName(string role);
     }
 }

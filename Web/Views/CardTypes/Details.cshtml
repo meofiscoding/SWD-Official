@@ -1,4 +1,4 @@
-﻿@model IEnumerable<App.DAL.Entity.TemplateCard>
+﻿@model IEnumerable<CardTypeViewModel>
 
 @{
     ViewData["Title"] = "Card";
@@ -17,7 +17,7 @@
                     <tr>
                         <th> @Html.DisplayNameFor(model => model.Title)</th>
                         <th> @Html.DisplayNameFor(model => model.Price)</th>
-                        <th> @Html.DisplayNameFor(model => model.Status)</th>
+                        <th> @Html.DisplayNameFor(model => model.TemplateCardStatus)</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,7 +27,7 @@
                         <tr>
                             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <a asp-action="Details" asp-controller="TemplateCards" asp-route-id="@item.TemplateId">@Html.DisplayFor(modelItem => item.Title)</a></td>
                             <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                            <td><span class="badge bg-label-@(item.Status == 1? "success":"danger") me-1">@(item.Status == 1? "Active":"Deactive")</span></td>
+                            <td><span class="badge bg-label-@(item.TemplateCardStatus == 1? "success":"danger") me-1">@(item.TemplateCardStatus == 1? "Active":"Deactive")</span></td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

@@ -1,4 +1,4 @@
-﻿@model App.DAL.Entity.TemplateCard
+﻿@model TemplateCardViewModel
 
 @{
     ViewData["Title"] = "Card";
@@ -16,7 +16,7 @@
                     <span class="badge bg-label-@(Model.Status == 1? "success":"danger") my-2 me-1">@(Model.Status == 1? "Active":"Deactive")</span>
                     <div class="mb-3">
                         <label for="exampleFormControlSelect1" class="form-label">Category </label>
-                        <input type="text" class="form-control" value="@Model.Type.TypeName" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp" disabled>
+                        <input type="text" class="form-control" value="@Model.TypeName" id="defaultFormControlInput" placeholder="Template Card Title" aria-describedby="defaultFormControlHelp" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="defaultFormControlInput" class="form-label">Title</label>
@@ -39,7 +39,7 @@
                                                 <div style="display:flex; flex-direction: column">
                                                     <span class="name" style="font-size:14px"> @Model.FileName - Uploaded  </span>
                                                 </div>
-                                                <span class="percent" style="display:flex"> <a href="/Uploads/@Model.Type.TypeName/@Model.FileName" class='bx bxs-download' style="font-size:20px; margin-right: 10px; cursor:pointer" download></a></span>
+                                                <span class="percent" style="display:flex"> <a href="/Uploads/@Model.TypeName/@Model.FileName" class='bx bxs-download' style="font-size:20px; margin-right: 10px; cursor:pointer" download></a></span>
                                             </div>
                                         </div>
                                     </li>

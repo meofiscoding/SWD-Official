@@ -11,6 +11,6 @@ namespace App.BLL.Services.Contracts
     public interface IAccountService
     {
         public bool Login(string username, string password);
-        
+        public int GetRoleIDByName(string role);
     }
 }

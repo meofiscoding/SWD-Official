@@ -15,5 +15,6 @@ namespace App.DAL.Repositories.Contracts
         CardType FindCardType(int? id);
         Task UpdateCard(CardType cardType);
         bool IsExistCardTypes(int id);
+        Task DeleteCard(CardType cardTypeEntity);
     }
 }

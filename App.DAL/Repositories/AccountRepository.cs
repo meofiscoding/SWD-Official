@@ -20,16 +20,11 @@ namespace App.DAL.Repositories
             _cmcContext = cmcContext;
         }
 
-        //public async Task<List<TModel>> GetCards()
-        //{
-        //    try
-        //    {
-        //        return await _cmcContext.Set<TModel>().ToListAsync();   
-        //    }catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
+        public int GetRoleByName(string role)
+        {
+            //get role id by name ignore case
+            return _cmcContext.Roles.Where(r => r.RoleName.ToLower() == role.ToLower()).FirstOrDefault().RoleId;
+        } 
 
         public User Login(string username, string password)
         {

@@ -1,4 +1,5 @@
-﻿using App.BLL.Services.Contracts;
+﻿using App.BLL.DTO;
+using App.BLL.Services.Contracts;
 using App.DAL.Entity;
 using App.DAL.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore; 
@@ -14,14 +15,29 @@ namespace App.BLL.Services
             _cardTypeRepository = cardTypeRepository;
         }
 
-        public Task CreateCard(CardType cardType)
+        public Task CreateCard(CardTypeDTO cardType)
         {
-            return _cardTypeRepository.CreateCard(cardType);
+            // convert cardTypeDTO to CardType Entity
+            var cardTypeEntity = new CardType
+            {
+                TypeId = cardType.TypeId,
+                TypeName = cardType.TypeName,
+                Status = cardType.Status 
+            }; 
+            return _cardTypeRepository.CreateCard(cardTypeEntity);
         } 
 
-        public CardType FindCardTypes(int? id)
+        public CardTypeDTO FindCardTypes(int? id)
         {
-            return _cardTypeRepository.FindCardType(id);
+            var cardType = _cardTypeRepository.FindCardType(id);
+            //convert cardType to cardTypeDTO
+            var cardTypeDTO = new CardTypeDTO
+            {
+                TypeId = cardType.TypeId,
+                TypeName = cardType.TypeName,
+                Status = cardType.Status 
+            };
+            return cardTypeDTO;
         }
 
         public string GetCardTypeName(int? id)
@@ -42,22 +58,55 @@ namespace App.BLL.Services
             return _cardTypeRepository.IsExistCardTypes(id);
         }
 
-        public Task UpdateCard(CardType cardType)
+        public Task UpdateCard(CardTypeDTO cardType)
         {
-            return _cardTypeRepository.UpdateCard(cardType);
+            //convert cardTypeDTO to CardType Entity
+            var cardTypeEntity = new CardType
+            {
+                TypeId = cardType.TypeId,
+                TypeName = cardType.TypeName,
+                Status = cardType.Status 
+            };
+            return _cardTypeRepository.UpdateCard(cardTypeEntity);
         }
 
-        async Task<List<CardType>> ICardTypeService.GetCardTypesAsync()
+        public async Task<List<CardTypeDTO>> GetCardTypesAsync()
         {
             try
             {
-                return await _cardTypeRepository.GetCardTypes().ToListAsync();
+                var cardTypes = await _cardTypeRepository.GetCardTypes().ToListAsync();
+                var cardTypesDTO = new List<CardTypeDTO>();
+                foreach (var item in cardTypes)
+                {
+                    cardTypesDTO.Add(new CardTypeDTO
+                    {
+                        TypeId = item.TypeId,
+                        TypeName = item.TypeName,
+                        Status = item.Status,
+                        Detail = item.Detail,
+                        CreatedAt = item.CreatedAt,
+                        UpdatedAt = item.UpdatedAt 
+                    });
+                };
+                return cardTypesDTO;
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+
+        public Task Delete(CardTypeDTO cardType)
+        {
+            //convert cardType to CardType Entity
+            var cardTypeEntity = new CardType
+            {
+                TypeId = cardType.TypeId,
+                TypeName = cardType.TypeName,
+                Status = cardType.Status 
+            };
+            return _cardTypeRepository.DeleteCard(cardTypeEntity);
         }
     }
 }

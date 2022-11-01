@@ -8,33 +8,77 @@ using App.DAL.Entity;
 using App.DAL.Repositories.Contracts;
 using App.BLL.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using App.BLL.DTO;
 
 namespace App.BLL.Services
 {
     public class CardTemplateService : ICardTemplateService
     {
-        private readonly ICardTemplateRepository<TemplateCard> _cardTemplateRepository;
+        private readonly ICardTemplateRepository<CardTemplateDTO> _cardTemplateRepository;
 
-        public CardTemplateService(ICardTemplateRepository<TemplateCard> cardTemplateRepository)
+        public CardTemplateService(ICardTemplateRepository<CardTemplateDTO> cardTemplateRepository)
         {
             _cardTemplateRepository = cardTemplateRepository;
         }
 
-        public Task AddCardTemplate(TemplateCard templateCard)
+        public Task AddCardTemplate(CardTemplateDTO templateCard)
         {
-            return _cardTemplateRepository.AddCard(templateCard);
+            //convert to CardTemplate Entity
+            var cardTemplate = new TemplateCard
+            {
+                TemplateId = templateCard.TemplateId,
+                TypeId = templateCard.TypeId,
+                Title = templateCard.Title,
+                Price = templateCard.Price,
+                Status = templateCard.Status,
+                CreatedAt = templateCard.CreatedAt,
+                UpdatedAt = templateCard.UpdatedAt,
+                FileName = templateCard.FileName
+            };
+            return _cardTemplateRepository.AddCard(cardTemplate);
         }
 
-        public TemplateCard FindTemplateCard(int? id)
+        public CardTemplateDTO FindTemplateCard(int? id)
         {
-            return _cardTemplateRepository.FindCardTemplate(id);
+            var cardTemplate = _cardTemplateRepository.FindCardTemplate(id);
+            //convert to CardTemplateDTO
+            var templateCard = new CardTemplateDTO
+            {
+                TemplateId = cardTemplate.TemplateId,
+                TypeId = cardTemplate.TypeId,
+                Title = cardTemplate.Title,
+                Price = cardTemplate.Price,
+                Status = cardTemplate.Status,
+                CreatedAt = cardTemplate.CreatedAt,
+                UpdatedAt = cardTemplate.UpdatedAt,
+                FileName = cardTemplate.FileName
+            };
+            return templateCard;
         }
 
-        public async Task<List<TemplateCard>> GetCardTemplates()
+        public async Task<List<CardTemplateDTO>> GetCardTemplates()
         {
             try
             {
-                return await _cardTemplateRepository.GetCardTemplates().ToListAsync();
+                var templateCards = await _cardTemplateRepository.GetCardTemplates().ToListAsync();
+                //convert to DTO
+                var cardTemplateDTOs = new List<CardTemplateDTO>();
+                foreach (var templateCard in templateCards)
+                {
+                    var cardTemplateDTO = new CardTemplateDTO
+                    {
+                        TemplateId = templateCard.TemplateId,
+                        TypeId = templateCard.TypeId,
+                        Title = templateCard.Title,
+                        Price = templateCard.Price,
+                        Status = templateCard.Status,
+                        FileName = templateCard.FileName,
+                        CreatedAt = templateCard.CreatedAt,
+                        UpdatedAt = templateCard.UpdatedAt
+                    };
+                    cardTemplateDTOs.Add(cardTemplateDTO);
+                }
+                return cardTemplateDTOs ;
             }
             catch (Exception)
             {
@@ -43,14 +87,45 @@ namespace App.BLL.Services
             }
         }
 
-        public List<TemplateCard> GetCardTemplatesByTypes(int? id)
+        public List<CardTemplateDTO> GetCardTemplatesByTypes(int? id)
         {
-            return _cardTemplateRepository.GetTemplatesCard(id);
+            var cardTemplate = _cardTemplateRepository.GetTemplatesCard(id);
+            //convert to DTO
+            var cardTemplateDTOs = new List<CardTemplateDTO>();
+            foreach (var templateCard in cardTemplate)
+            {
+                var cardTemplateDTO = new CardTemplateDTO
+                {
+                    TemplateId = templateCard.TemplateId,
+                    TypeId = templateCard.TypeId,
+                    Title = templateCard.Title,
+                    Price = templateCard.Price,
+                    Status = templateCard.Status,
+                    FileName = templateCard.FileName,
+                    CreatedAt = templateCard.CreatedAt,
+                    UpdatedAt = templateCard.UpdatedAt
+                };
+                cardTemplateDTOs.Add(cardTemplateDTO);
+            }
+            return cardTemplateDTOs;
         }
 
-        public TemplateCard GetDetailCardtemplateByType(int? id)
+        public CardTemplateDTO GetDetailCardtemplateByType(int? id)
         {
-            return _cardTemplateRepository.GetDetails(id);
+            var cardTemplate = _cardTemplateRepository.GetDetails(id);
+            //convert to DTO
+            var cardTemplateDTO = new CardTemplateDTO
+            {
+                TemplateId = cardTemplate.TemplateId,
+                TypeId = cardTemplate.TypeId,
+                Title = cardTemplate.Title,
+                Price = cardTemplate.Price,
+                Status = cardTemplate.Status,
+                CreatedAt = cardTemplate.CreatedAt,
+                UpdatedAt = cardTemplate.UpdatedAt,
+                TypeName = cardTemplate.Type.TypeName
+            };
+            return cardTemplateDTO;
         }
 
         public bool IsExist(int id)
@@ -58,14 +133,38 @@ namespace App.BLL.Services
             return _cardTemplateRepository.IsExist(id);
         }
 
-        public Task RemoveCardTemplate(TemplateCard templateCard)
+        public Task RemoveCardTemplate(CardTemplateDTO templateCard)
         {
-            return _cardTemplateRepository.RemoveCard(templateCard);
+            //convert templateCard to CardTemplate Entity
+            var cardTemplate = new TemplateCard
+            {
+                TemplateId = templateCard.TemplateId,
+                TypeId = templateCard.TypeId,
+                Title = templateCard.Title,
+                Price = templateCard.Price,
+                Status = templateCard.Status,
+                CreatedAt = templateCard.CreatedAt,
+                UpdatedAt = templateCard.UpdatedAt,
+                FileName = templateCard.FileName
+            };
+            return _cardTemplateRepository.RemoveCard(cardTemplate);
         }
 
-        public Task UpdateCardTemplate(TemplateCard templateCard)
+        public Task UpdateCardTemplate(CardTemplateDTO templateCard)
         {
-            return _cardTemplateRepository.UpdateCard(templateCard);
+            //convert templateCard to CardTemplate Entity
+            var cardTemplate = new TemplateCard
+            {
+                TemplateId = templateCard.TemplateId,
+                TypeId = templateCard.TypeId,
+                Title = templateCard.Title,
+                Price = templateCard.Price,
+                Status = templateCard.Status,
+                CreatedAt = templateCard.CreatedAt,
+                UpdatedAt = templateCard.UpdatedAt,
+                FileName = templateCard.FileName
+            };
+            return _cardTemplateRepository.UpdateCard(cardTemplate);
         }
     }
 }

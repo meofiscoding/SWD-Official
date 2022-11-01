@@ -24,6 +24,12 @@ namespace App.DAL.Repositories
             await _cmcContext.SaveChangesAsync();
         }
 
+        public Task DeleteCard(CardType cardTypeEntity)
+        {
+            _cmcContext.Remove(cardTypeEntity);
+            return _cmcContext.SaveChangesAsync();
+        }
+
         public CardType FindCardType(int? id)
         {
             return _cmcContext.CardTypes.Find(id);
