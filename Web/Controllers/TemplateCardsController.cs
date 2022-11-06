@@ -211,11 +211,7 @@ namespace Web.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.TemplateCards == null)
-            {
-                return Problem("Entity set 'CMCContext.TemplateCards'  is null.");
-            }
+        { 
             var templateCard = _cardTemplateService.FindTemplateCard(id);
             if (templateCard != null)
             {
