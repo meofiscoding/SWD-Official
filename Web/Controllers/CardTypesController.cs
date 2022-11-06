@@ -64,11 +64,6 @@ namespace Web.Controllers
                 TemplateId = c.TemplateId
             }).ToList(); 
 
-            if (templateCards == null)
-            {
-                return NotFound();
-            }
-
             return View(cardTypeViewModels);
         }
 
