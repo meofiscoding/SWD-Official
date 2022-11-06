@@ -144,7 +144,7 @@ namespace Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TemplateId,TypeId,Title,Price,Status,FileName")] TemplateCard templateCard, IFormFile FileUpload, string deletedFile)
+        public async Task<IActionResult> Edit(int id, [Bind("TemplateId,TypeId,Title,Price,Status,FileName")] TemplateCardViewModel templateCard, IFormFile FileUpload, string deletedFile)
         {
             if (id != templateCard.TemplateId)
             {
