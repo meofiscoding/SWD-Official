@@ -48,11 +48,7 @@ namespace Web.Controllers
 
         // GET: CardTypes/Details/5
         public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null )    
-            {
-                return NotFound();
-            }
+        { 
             ViewBag.TypeName = _cardTypeService.GetCardTypeName(id);
             var templateCards = _cardTemplateService.GetCardTemplatesByTypes(id);
             //convert list templateCards to list CardTypeViewModel
